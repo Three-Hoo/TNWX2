@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -14,9 +14,9 @@ export class QyAgentApi {
    * @param agentId 应用id
    * @param accessToken AccessToken
    */
-  public static async getAgent(agentId: string, accessToken?: AccessToken) {
+  public static async getAgent(apiConfig: ApiConfig, agentId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getAgentUrl, accessToken.getAccessToken, agentId)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -28,9 +28,9 @@ export class QyAgentApi {
    * 获取access_token对应的应用列表
    * @param accessToken AccessToken
    */
-  public static async getAgentList(accessToken?: AccessToken) {
+  public static async getAgentList(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getAgentListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -50,6 +50,7 @@ export class QyAgentApi {
    * @param homeUrl 应用主页url
    */
   public static async setAgent(
+    apiConfig: ApiConfig,
     agentId: string,
     name?: string,
     description?: string,
@@ -59,7 +60,7 @@ export class QyAgentApi {
     logoMediaid?: string,
     homeUrl?: string
   ) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.setAgentUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -83,8 +84,8 @@ export class QyAgentApi {
    * @param agentId 应用id
    * @param jsonData 请求数据
    */
-  public static async createMenu(agentId: string, jsonData: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async createMenu(apiConfig: ApiConfig, agentId: string, jsonData: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.createUrl, accessToken.getAccessToken, agentId)
     return HttpKit.getHttpDelegate.httpPost(url, jsonData)
   }
@@ -95,8 +96,8 @@ export class QyAgentApi {
    * 获取菜单
    * @param agentId 应用id
    */
-  public static async getMenu(agentId: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getMenu(apiConfig: ApiConfig, agentId: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getUrl, accessToken.getAccessToken, agentId)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -107,8 +108,8 @@ export class QyAgentApi {
    * 删除菜单
    * @param agentId 应用id
    */
-  public static async deleteMenu(agentId: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async deleteMenu(apiConfig: ApiConfig, agentId: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.deleteUrl, accessToken.getAccessToken, agentId)
     return HttpKit.getHttpDelegate.httpGet(url)
   }

@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -15,9 +15,9 @@ export class QyMediaApi {
    * @param filePath 文件路径
    * @param accessToken AccessToken
    */
-  public static async upload(mediaType: QyMediaType, filePath: string, accessToken?: AccessToken) {
+  public static async upload(apiConfig: ApiConfig, mediaType: QyMediaType, filePath: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.uploadUrl, accessToken.getAccessToken, mediaType)
     return HttpKit.getHttpDelegate.upload(url, filePath)
@@ -30,9 +30,9 @@ export class QyMediaApi {
    * @param filePath 文件路径
    * @param accessToken AccessToken
    */
-  public static async uploadImg(filePath: string, accessToken?: AccessToken) {
+  public static async uploadImg(apiConfig: ApiConfig, filePath: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.uploadImgUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.upload(url, filePath)
@@ -45,9 +45,9 @@ export class QyMediaApi {
    * @param mediaId 媒体文件id
    * @param accessToken AccessToken
    */
-  public static async get(mediaId: string, accessToken?: AccessToken) {
+  public static async get(apiConfig: ApiConfig, mediaId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUrl, accessToken.getAccessToken, mediaId)
     return HttpKit.getHttpDelegate.httpGet(url, {
@@ -63,9 +63,9 @@ export class QyMediaApi {
    * @param mediaId 媒体文件id
    * @param accessToken AccessToken
    */
-  public static async jssdkMedia(mediaId: string, accessToken?: AccessToken) {
+  public static async jssdkMedia(apiConfig: ApiConfig, mediaId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.jssdkMediaUrl, accessToken.getAccessToken, mediaId)
     return HttpKit.getHttpDelegate.httpGet(url, {

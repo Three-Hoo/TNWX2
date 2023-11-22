@@ -60,9 +60,9 @@ export class QyWeChat {
    * @param type QyJsApiType
    * @param jsapi_ticket jsapi_ticket
    */
-  public static async jssdkSignature(nonce_str: string, timestamp: string, url: string, type: QyJsApiType, jsapi_ticket?: string): Promise<string> {
+  public static async jssdkSignature(apiConfig: ApiConfig, nonce_str: string, timestamp: string, url: string, type: QyJsApiType, jsapi_ticket?: string): Promise<string> {
     if (!jsapi_ticket) {
-      let jsTicket = await QyJsTicketApi.getTicket(type)
+      let jsTicket = await QyJsTicketApi.getTicket(apiConfig, type)
       if (jsTicket) {
         jsapi_ticket = jsTicket.getTicket
         if (QyApiConfigKit.isDevMode()) {

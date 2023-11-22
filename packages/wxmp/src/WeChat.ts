@@ -47,9 +47,9 @@ export class WeChat {
    * @param accessToken   api_authorizer_token
    * @param jsapi_ticket
    */
-  public static async jssdkSignature(nonce_str: string, timestamp: string, url: string, accessToken?: AccessToken, jsapi_ticket?: string): Promise<string> {
+  public static async jssdkSignature(apiConfig: ApiConfig, nonce_str: string, timestamp: string, url: string, accessToken?: AccessToken, jsapi_ticket?: string): Promise<string> {
     if (!jsapi_ticket) {
-      let jsTicket = await JsTicketApi.getTicket(JsApiType.JSAPI, accessToken)
+      let jsTicket = await JsTicketApi.getTicket(apiConfig, JsApiType.JSAPI, accessToken)
       if (jsTicket) {
         jsapi_ticket = jsTicket.getTicket
         if (ApiConfigKit.isDevMode()) {

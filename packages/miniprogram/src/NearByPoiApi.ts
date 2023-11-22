@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -24,6 +24,7 @@ export class NearByPoiApi {
    * @param poiId 门店的poi_id
    */
   public static async add(
+    apiConfig: ApiConfig,
     picList: object,
     storeName: string,
     hour: string,
@@ -35,7 +36,7 @@ export class NearByPoiApi {
     kfInfo?: object,
     poiId?: string
   ) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.addUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -61,8 +62,8 @@ export class NearByPoiApi {
    * 删除地点
    * @param poiId 附近地点 ID
    */
-  public static async delete(poiId: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async delete(apiConfig: ApiConfig, poiId: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.delUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -79,8 +80,8 @@ export class NearByPoiApi {
    * @param page 起始页id（从1开始计数）
    * @param pageRow 每页展示个数（最多1000个）
    */
-  public static async get(page: number, pageRow: number) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async get(apiConfig: ApiConfig, page: number, pageRow: number) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.delUrl, (<AccessToken>accessToken).getAccessToken, page, pageRow)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -92,8 +93,8 @@ export class NearByPoiApi {
    * @param poiId 附近地点 ID
    * @param status 是否展示
    */
-  public static async showStatus(poiId: string, status: number) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async showStatus(apiConfig: ApiConfig, poiId: string, status: number) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.showStatusUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

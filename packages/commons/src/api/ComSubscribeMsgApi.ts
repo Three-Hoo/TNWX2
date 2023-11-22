@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -22,8 +22,8 @@ export class ComSubscribeMsgApi {
    * @param kidList 开发者自行组合好的模板关键词列表，最多支持5个，最少2个关键词组合
    * @param sceneDesc 服务场景描述，15个字以内
    */
-  public static async addTemplate(tid: string, kidList: Array<Number>, sceneDesc?: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async addTemplate(apiConfig: ApiConfig, tid: string, kidList: Array<Number>, sceneDesc?: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.addTemplateUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -39,8 +39,8 @@ export class ComSubscribeMsgApi {
    * 删除帐号下的个人模板
    * @param priTmplId 要删除的模板id
    */
-  public static async delTemplate(priTmplId: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async delTemplate(apiConfig: ApiConfig, priTmplId: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.delTemplateUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -53,8 +53,8 @@ export class ComSubscribeMsgApi {
   /**
    * 获取公众号类目
    */
-  public static async getCategory() {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getCategory(apiConfig: ApiConfig) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getCategoryUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -63,8 +63,8 @@ export class ComSubscribeMsgApi {
    * 获取模板中的关键词
    * @param tid 模板标题 id
    */
-  public static async getPubTemplateKeyWords(tid: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getPubTemplateKeyWords(apiConfig: ApiConfig, tid: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getPubTemplateKeyWordsUrl, (<AccessToken>accessToken).getAccessToken, tid)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -75,8 +75,8 @@ export class ComSubscribeMsgApi {
    * @param start 用于分页，表示从 start 开始。从 0 开始计数。
    * @param limit 用于分页，表示拉取 limit 条记录。最大为 30。
    */
-  public static async getPubTemplateTitles(ids: Array<Number>, start = 0, limit = 30) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getPubTemplateTitles(apiConfig: ApiConfig, ids: Array<Number>, start = 0, limit = 30) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getPubTemplateTitlesUrl, (<AccessToken>accessToken).getAccessToken, ids.join(','), start, limit)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -84,8 +84,8 @@ export class ComSubscribeMsgApi {
   /**
    * 获取私有模板列表
    */
-  public static async getTemplate() {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getTemplate(apiConfig: ApiConfig) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getTemplateUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -98,8 +98,8 @@ export class ComSubscribeMsgApi {
    * @param page 点击模板卡片后的跳转页面
    * @param miniprogram 跳转小程序时填写，格式如{ "appid": "pagepath": { "value": any } }
    */
-  public static async sendSubMessage(touser: string, templateId: string, data: any, page?: string, miniprogram?: any) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async sendSubMessage(apiConfig: ApiConfig, touser: string, templateId: string, data: any, page?: string, miniprogram?: any) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.sendMessageUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

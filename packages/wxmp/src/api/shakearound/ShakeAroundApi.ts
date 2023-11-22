@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -21,6 +21,7 @@ export class ShakeAroundApi {
    * @param accessToken
    */
   public static async register(
+    apiConfig: ApiConfig,
     name: string,
     phoneNumber: string,
     email: string,
@@ -30,7 +31,7 @@ export class ShakeAroundApi {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.registerUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -51,9 +52,9 @@ export class ShakeAroundApi {
    * 查询审核状态
    * @param accessToken
    */
-  public static async auditStatus(accessToken?: AccessToken) {
+  public static async auditStatus(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.auditStatusUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -66,9 +67,9 @@ export class ShakeAroundApi {
    * @param filePath 文件路径 图片格式限定为：jpg,jpeg,png,gif。
    * @param accessToken
    */
-  public static async addMaterial(type = MaterialType.icon, filePath: string, accessToken?: AccessToken) {
+  public static async addMaterial(apiConfig: ApiConfig, type = MaterialType.icon, filePath: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addMaterialUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.upload(

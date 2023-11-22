@@ -36,7 +36,7 @@ export class OpenMpSnsAccessTokenApi {
    * @param code
    */
   public static async getSnsAccessToken(apiConfig: ApiConfig, code: string, appId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.accessTokenUrl, appId, code, apiConfig.getAppId, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -46,7 +46,7 @@ export class OpenMpSnsAccessTokenApi {
    * @param refreshToken
    */
   public static async refreshAccessToken(apiConfig: ApiConfig, appId: string, refreshToken: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.refreshTokenUrl, appId, apiConfig.getAppId, accessToken.getAccessToken, refreshToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }

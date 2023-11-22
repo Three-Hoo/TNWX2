@@ -1,7 +1,7 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi, OpenCpAccessTokenApi, AccessTokenType } from '@tnwx2/accesstoken'
+import { AccessToken, QyAccessTokenApi, OpenCpAccessTokenApi, AccessTokenType, ApiConfig } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -39,8 +39,8 @@ export class OpenCpOauthApi {
    * 根据 code 获取成员信息
    * @param code 通过成员授权获取到的 code
    */
-  public static async getUserInfo(code: string) {
-    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(AccessTokenType.SUITE_TOKEN)
+  public static async getUserInfo(apiConfig: ApiConfig, code: string) {
+    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(apiConfig, AccessTokenType.SUITE_TOKEN)
     let url = util.format(this.getUserInfoUrl, accessToken.getAccessToken, code)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -51,8 +51,8 @@ export class OpenCpOauthApi {
    * 获取访问用户敏感信息
    * @param userTicket 成员票据
    */
-  public static async getUserDetail(userTicket: string) {
-    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(AccessTokenType.SUITE_TOKEN)
+  public static async getUserDetail(apiConfig: ApiConfig, userTicket: string) {
+    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(apiConfig, AccessTokenType.SUITE_TOKEN)
     let url = util.format(this.getUserDetailUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -68,8 +68,8 @@ export class OpenCpOauthApi {
    * 获取登录用户信息
    * @param authCode oauth2.0授权企业微信管理员登录产生的code
    */
-  public static async getLoginInfo(authCode: string) {
-    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(AccessTokenType.PROVIDER_TOKEN)
+  public static async getLoginInfo(apiConfig: ApiConfig, authCode: string) {
+    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(apiConfig, AccessTokenType.PROVIDER_TOKEN)
     let url = util.format(this.getLoginInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

@@ -1,7 +1,7 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -30,8 +30,8 @@ export class QyOauthApi {
    * 根据 code 获取成员信息
    * @param code 通过成员授权获取到的 code
    */
-  public static async getUserInfo(code: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getUserInfo(apiConfig: ApiConfig, code: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getUserInfoUrl, accessToken.getAccessToken, code)
     return HttpKit.getHttpDelegate.httpGet(url)
   }

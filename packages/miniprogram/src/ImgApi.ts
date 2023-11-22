@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -14,8 +14,8 @@ export class ImgApi {
    * @param type 接口URL
    * @param imgUrl 图片的URL
    */
-  public static async imgProcessingByUrl(type: ImgProcessingType, imgUrl: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async imgProcessingByUrl(apiConfig: ApiConfig, type: ImgProcessingType, imgUrl: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(type, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url.concat('&img_url=').concat(imgUrl))
   }
@@ -25,8 +25,8 @@ export class ImgApi {
    * @param type 接口URL
    * @param filePath 图片文件路径
    */
-  public static async imgProcessingByFile(type: ImgProcessingType, filePath: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async imgProcessingByFile(apiConfig: ApiConfig, type: ImgProcessingType, filePath: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(type, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.upload(url, filePath)
   }

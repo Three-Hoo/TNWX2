@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -13,9 +13,9 @@ export class CallbackApi {
    * 获取微信服务器IP地址
    * @param accessToken
    */
-  public static async getCallbackIp(accessToken?: AccessToken) {
+  public static async getCallbackIp(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.apiUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -28,9 +28,9 @@ export class CallbackApi {
    * @param operator  指定平台从某个运营商进行检测，允许的值：CHINANET（电信出口）、UNICOM（联通出口）、CAP（腾讯自建出口）、DEFAULT（根据ip来选择运营商）
    * @param accessToken
    */
-  public static async check(action: CheckAction = CheckAction.ALL, operator: CheckOperator = CheckOperator.DEFAULT, accessToken?: AccessToken) {
+  public static async check(apiConfig: ApiConfig, action: CheckAction = CheckAction.ALL, operator: CheckOperator = CheckOperator.DEFAULT, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.checkUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

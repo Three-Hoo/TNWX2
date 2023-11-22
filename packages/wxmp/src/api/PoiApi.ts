@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -20,9 +20,9 @@ export class PoiApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async addPoi(jsonStr: string, accessToken?: AccessToken) {
+  public static async addPoi(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addPoiUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -33,9 +33,9 @@ export class PoiApi {
    * @param poiId
    * @param accessToken
    */
-  public static async getPoi(poiId: string, accessToken?: AccessToken) {
+  public static async getPoi(apiConfig: ApiConfig, poiId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getPoiUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -52,9 +52,9 @@ export class PoiApi {
    * @param limit 返回数据条数，最大允许50，默认为20
    * @param accessToken
    */
-  public static async getPoiList(begin: number = 0, limit: number = 20, accessToken?: AccessToken) {
+  public static async getPoiList(apiConfig: ApiConfig, begin: number = 0, limit: number = 20, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getPoiListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -71,9 +71,9 @@ export class PoiApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async updatePoi(jsonStr: string, accessToken?: AccessToken) {
+  public static async updatePoi(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updatePoiUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -84,9 +84,9 @@ export class PoiApi {
    * @param poiId
    * @param accessToken
    */
-  public static async delPoi(poiId: string, accessToken?: AccessToken) {
+  public static async delPoi(apiConfig: ApiConfig, poiId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delPoiUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -101,9 +101,9 @@ export class PoiApi {
    * 门店类目表
    * @param accessToken
    */
-  public static async getWxCategory(accessToken?: AccessToken) {
+  public static async getWxCategory(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getWxCategoryUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)

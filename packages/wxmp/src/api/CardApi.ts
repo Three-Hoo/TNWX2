@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -15,9 +15,9 @@ export class CardApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async create(jsonStr: string, accessToken?: AccessToken) {
+  public static async create(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.cardCreateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -31,9 +31,9 @@ export class CardApi {
    * @param isOpen
    * @param accessToken
    */
-  public static async setPayCell(cardId: string, isOpen: boolean, accessToken?: AccessToken) {
+  public static async setPayCell(apiConfig: ApiConfig, cardId: string, isOpen: boolean, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.setPayCellUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -54,9 +54,16 @@ export class CardApi {
    * @param needRemarkAmount 用户核销时是否需要备注核销金额， 填true/false， 默认为false
    * @param accessToken
    */
-  public static async setSelfConsumeCell(cardId: string, isOpen: boolean = false, needVerifyCod: boolean = false, needRemarkAmount: boolean = false, accessToken?: AccessToken) {
+  public static async setSelfConsumeCell(
+    apiConfig: ApiConfig,
+    cardId: string,
+    isOpen: boolean = false,
+    needVerifyCod: boolean = false,
+    needRemarkAmount: boolean = false,
+    accessToken?: AccessToken
+  ) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.setSelfConsumeCellUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -76,9 +83,9 @@ export class CardApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async createQrcodeCard(jsonStr: string, accessToken?: AccessToken) {
+  public static async createQrcodeCard(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.createQrcodeCardUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -90,9 +97,9 @@ export class CardApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async createLandingPageCard(jsonStr: string, accessToken?: AccessToken) {
+  public static async createLandingPageCard(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.createLandingPageCardUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -104,9 +111,9 @@ export class CardApi {
    * @param cardId
    * @param accessToken
    */
-  public static async getHtmlMpNews(cardId: string, accessToken?: AccessToken) {
+  public static async getHtmlMpNews(apiConfig: ApiConfig, cardId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getHtmlMpNewsUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -123,9 +130,9 @@ export class CardApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async setTestWhiteList(jsonStr: string, accessToken?: AccessToken) {
+  public static async setTestWhiteList(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.setTestWhiteListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -139,7 +146,7 @@ export class CardApi {
    * @param checkConsume 是否校验code核销状态
    * @param accessToken
    */
-  public static async getCode(code: string, cardId?: string, checkConsume?: boolean, accessToken?: AccessToken) {
+  public static async getCode(apiConfig: ApiConfig, code: string, cardId?: string, checkConsume?: boolean, accessToken?: AccessToken) {
     let map = new Map()
     map.set('code', code)
     if (cardId) {
@@ -149,7 +156,7 @@ export class CardApi {
       map.set('check_consume', checkConsume)
     }
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -162,14 +169,14 @@ export class CardApi {
    * @param cardId 卡券ID。创建卡券时use_custom_code填写true时必填。非自定义Code不必填写。
    * @param accessToken
    */
-  public static async consume(code: string, cardId?: string, accessToken?: AccessToken) {
+  public static async consume(apiConfig: ApiConfig, code: string, cardId?: string, accessToken?: AccessToken) {
     let map = new Map()
     map.set('code', code)
     if (cardId) {
       map.set('card_id', cardId)
     }
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.consumeCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -181,9 +188,9 @@ export class CardApi {
    * @param openid 当前卡券使用者的openid，通常通过网页授权登录或自定义url跳转参数获得。
    * @param accessToken
    */
-  public static async consumeOnline(code: string, openid: string, accessToken?: AccessToken) {
+  public static async consumeOnline(apiConfig: ApiConfig, code: string, openid: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.consumeCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -201,9 +208,9 @@ export class CardApi {
    * @param encryptCode 经过加密的Code码
    * @param accessToken
    */
-  public static async decryptCode(encryptCode: string, accessToken?: AccessToken) {
+  public static async decryptCode(apiConfig: ApiConfig, encryptCode: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.decryptCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -221,9 +228,9 @@ export class CardApi {
    * @param codeList 需导入微信卡券后台的自定义code，上限为100个。
    * @param accessToken
    */
-  public static async setDeposit(cardId: string, codeList: [], accessToken?: AccessToken) {
+  public static async setDeposit(apiConfig: ApiConfig, cardId: string, codeList: [], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.setDepositUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -241,9 +248,9 @@ export class CardApi {
    * @param cardId
    * @param accessToken
    */
-  public static async getDepositCount(cardId: string, accessToken?: AccessToken) {
+  public static async getDepositCount(apiConfig: ApiConfig, cardId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getDepositCountUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -261,9 +268,9 @@ export class CardApi {
    * @param codeList 已经微信卡券后台的自定义code，上限为100个
    * @param accessToken
    */
-  public static async checkCode(cardId: string, codeList: [], accessToken?: AccessToken) {
+  public static async checkCode(apiConfig: ApiConfig, cardId: string, codeList: [], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.checkCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -282,14 +289,14 @@ export class CardApi {
    * @param cardId 卡券ID 不填写时默认查询当前appid下的卡券
    * @param accessToken
    */
-  public static async getUserCardList(openid: string, cardId?: string, accessToken?: AccessToken) {
+  public static async getUserCardList(apiConfig: ApiConfig, openid: string, cardId?: string, accessToken?: AccessToken) {
     let map = new Map()
     map.set('openid', openid)
     if (cardId) {
       map.set('card_id', cardId)
     }
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserCardListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -301,9 +308,9 @@ export class CardApi {
    * @param cardId 卡券ID
    * @param accessToken
    */
-  public static async getCard(cardId: string, accessToken?: AccessToken) {
+  public static async getCard(apiConfig: ApiConfig, cardId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getCardUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -328,7 +335,7 @@ export class CardApi {
    * “CARD_STATUS_DELETE”， 卡券被商户删除；
    * “CARD_STATUS_DISPATCH”，在公众平台投放过的卡券
    */
-  public static async getBatch(offset: number, count: number, statusList?: [], accessToken?: AccessToken) {
+  public static async getBatch(apiConfig: ApiConfig, offset: number, count: number, statusList?: [], accessToken?: AccessToken) {
     let map = new Map()
     map.set('offset', offset)
     map.set('count', count)
@@ -336,7 +343,7 @@ export class CardApi {
       map.set('status_list', statusList)
     }
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getBatchUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -348,9 +355,9 @@ export class CardApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async update(jsonStr: string, accessToken?: AccessToken) {
+  public static async update(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -364,9 +371,9 @@ export class CardApi {
    * @param reduce 减少多少库存，可以不填或填0
    * @param accessToken
    */
-  public static async modifyStock(cardId: string, increase: number = 0, reduce: number = 0, accessToken?: AccessToken) {
+  public static async modifyStock(apiConfig: ApiConfig, cardId: string, increase: number = 0, reduce: number = 0, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.modifyStockUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -387,7 +394,7 @@ export class CardApi {
    * @param cardId 卡券ID。自定义Code码卡券为必填
    * @param accessToken
    */
-  public static async updateCode(code: string, newCode: string, cardId?: string, accessToken?: AccessToken) {
+  public static async updateCode(apiConfig: ApiConfig, code: string, newCode: string, cardId?: string, accessToken?: AccessToken) {
     let map = new Map()
     map.set('code', code)
     map.set('new_code', newCode)
@@ -395,7 +402,7 @@ export class CardApi {
       map.set('card_id', cardId)
     }
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -407,9 +414,9 @@ export class CardApi {
    * @param cardId 卡券ID
    * @param accessToken
    */
-  public static async delete(cardId: string, accessToken?: AccessToken) {
+  public static async delete(apiConfig: ApiConfig, cardId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -428,7 +435,7 @@ export class CardApi {
    * @param reason 失效理由
    * @param accessToken
    */
-  public static async unavailable(cardId?: string, code?: string, reason?: string, accessToken?: AccessToken) {
+  public static async unavailable(apiConfig: ApiConfig, cardId?: string, code?: string, reason?: string, accessToken?: AccessToken) {
     if (!code && !cardId) {
       throw new Error('code 与 card_id 不能同时为空')
     }
@@ -438,7 +445,7 @@ export class CardApi {
     if (reason) map.set('reason', reason)
 
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.unavailableUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -452,9 +459,9 @@ export class CardApi {
    * @param condSource 卡券来源，0为公众平台创建的卡券数据 、1是API创建的卡券数据
    * @param accessToken
    */
-  public static async getCardBizUinInfo(beginDate: string, endDate: string, condSource: number = 0, accessToken?: AccessToken) {
+  public static async getCardBizUinInfo(apiConfig: ApiConfig, beginDate: string, endDate: string, condSource: number = 0, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getCardBizUinInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -476,7 +483,7 @@ export class CardApi {
    * @param cardId 卡券ID 填写后，指定拉出该卡券的相关数据
    * @param accessToken
    */
-  public static async getFreeCardInfo(beginDate: string, endDate: string, condSource: number = 0, cardId?: string, accessToken?: AccessToken) {
+  public static async getFreeCardInfo(apiConfig: ApiConfig, beginDate: string, endDate: string, condSource: number = 0, cardId?: string, accessToken?: AccessToken) {
     let map = new Map()
     map.set('begin_date', beginDate)
     map.set('end_date', endDate)
@@ -484,7 +491,7 @@ export class CardApi {
     if (cardId) map.set('card_id', cardId)
 
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getFreeCardInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -497,9 +504,9 @@ export class CardApi {
    * @param data
    * @param accessToken
    */
-  public static async subMerchantSubmit(data: string, accessToken?: AccessToken) {
+  public static async subMerchantSubmit(apiConfig: ApiConfig, data: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.subMerchantSubmitUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, data)
@@ -512,9 +519,9 @@ export class CardApi {
    * @param data
    * @param accessToken
    */
-  public static async subMerchantUpdate(data: string, accessToken?: AccessToken) {
+  public static async subMerchantUpdate(apiConfig: ApiConfig, data: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.subMerchantUpdateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, data)
@@ -527,9 +534,9 @@ export class CardApi {
    * @param merchantId
    * @param accessToken
    */
-  public static async getSubMerchant(merchantId: string, accessToken?: AccessToken) {
+  public static async getSubMerchant(apiConfig: ApiConfig, merchantId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getSubMerchantUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -549,9 +556,9 @@ export class CardApi {
    * @param status      子商户审核状态，填入后，只会拉出当前状态的子商户
    * @param accessToken accessToken
    */
-  public static async batchGetSubMerchant(beginId: string, limit: number, status: string, accessToken?: AccessToken) {
+  public static async batchGetSubMerchant(apiConfig: ApiConfig, beginId: string, limit: number, status: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.batchGetSubMerchantUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -570,9 +577,9 @@ export class CardApi {
    * 卡券开放类目查询接口
    * @param accessToken
    */
-  public static async getApplyProtocol(accessToken?: AccessToken) {
+  public static async getApplyProtocol(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getApplyProtocolUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)

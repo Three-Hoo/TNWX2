@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -15,9 +15,9 @@ export class MediaApi {
    * @param mediaType
    * @param accessToken
    */
-  public static async uploadMedia(filePath: string, mediaType: MediaType, accessToken?: AccessToken) {
+  public static async uploadMedia(apiConfig: ApiConfig, filePath: string, mediaType: MediaType, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.uploadUrl, accessToken.getAccessToken, mediaType)
     return HttpKit.getHttpDelegate.upload(url, filePath)
@@ -30,9 +30,9 @@ export class MediaApi {
    * @param mediaId
    * @param accessToken
    */
-  public static async getMedia(mediaId: string, accessToken?: AccessToken) {
+  public static async getMedia(apiConfig: ApiConfig, mediaId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUrl, accessToken.getAccessToken, mediaId)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -47,9 +47,9 @@ export class MediaApi {
    * @param mediaId
    * @param accessToken
    */
-  public static async getJssdkMedia(mediaId: string, accessToken?: AccessToken) {
+  public static async getJssdkMedia(apiConfig: ApiConfig, mediaId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.get_jssdk_url, accessToken.getAccessToken, mediaId)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -61,9 +61,9 @@ export class MediaApi {
    * @param mediaId
    * @param accessToken
    */
-  public static async uploadNews(mediaArticles: MediaArticles[], accessToken?: AccessToken) {
+  public static async uploadNews(apiConfig: ApiConfig, mediaArticles: MediaArticles[], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.add_news, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -81,9 +81,9 @@ export class MediaApi {
    * @param mediaArticles
    * @param accessToken
    */
-  public static async updateNews(mediaId: string, index: number, mediaArticles: MediaArticles, accessToken?: AccessToken) {
+  public static async updateNews(apiConfig: ApiConfig, mediaId: string, index: number, mediaArticles: MediaArticles, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.update_news, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -104,9 +104,9 @@ export class MediaApi {
    * @param filePath
    * @param accessToken
    */
-  public static async uploadImg(filePath: string, accessToken?: AccessToken) {
+  public static async uploadImg(apiConfig: ApiConfig, filePath: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.uploadImgUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.upload(url, filePath)
@@ -121,9 +121,9 @@ export class MediaApi {
    * @param mediaType
    * @param accessToken
    */
-  public static async addMaterial(filePath: string, mediaType: MediaType, accessToken?: AccessToken) {
+  public static async addMaterial(apiConfig: ApiConfig, filePath: string, mediaType: MediaType, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addMaterialUrl, accessToken.getAccessToken, mediaType)
     return HttpKit.getHttpDelegate.upload(url, filePath)
@@ -136,9 +136,9 @@ export class MediaApi {
    * @param introduction
    * @param accessToken
    */
-  public static async addVideoMaterial(filePath: string, title: string, introduction: string, accessToken?: AccessToken) {
+  public static async addVideoMaterial(apiConfig: ApiConfig, filePath: string, title: string, introduction: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addMaterialUrl, accessToken.getAccessToken, MediaType.VIDEO)
     return HttpKit.getHttpDelegate.upload(
@@ -157,9 +157,9 @@ export class MediaApi {
    * @param mediaId
    * @param accessToken
    */
-  public static async getMaterial(mediaId: string, accessToken?: AccessToken) {
+  public static async getMaterial(apiConfig: ApiConfig, mediaId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getMaterialUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -176,9 +176,9 @@ export class MediaApi {
    * @param mediaId
    * @param accessToken
    */
-  public static async delMaterial(mediaId: string, accessToken?: AccessToken) {
+  public static async delMaterial(apiConfig: ApiConfig, mediaId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delMaterialUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -194,9 +194,9 @@ export class MediaApi {
    * 获取素材总数
    * @param accessToken
    */
-  public static async getMaterialCount(accessToken?: AccessToken) {
+  public static async getMaterialCount(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getMaterialCountUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -210,13 +210,13 @@ export class MediaApi {
    * @param count 返回素材的数量，取值在1到20之间
    * @param accessToken
    */
-  public static async batchGetMaterial(mediaType: MediaType, offset: number = 0, count: number = 1, accessToken?: AccessToken) {
+  public static async batchGetMaterial(apiConfig: ApiConfig, mediaType: MediaType, offset: number = 0, count: number = 1, accessToken?: AccessToken) {
     if (offset < 0) offset = 0
     if (count > 20) count = 20
     if (count < 1) count = 1
 
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.batchGetMaterialUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

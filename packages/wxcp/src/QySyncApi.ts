@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -16,9 +16,9 @@ export class QySyncApi {
    * @param callback 回调信息
    * @param accessToken {AccessToken}
    */
-  public static async batchSyncUser(mediaId: string, toInvite = true, callback?: QySyncCallback, accessToken?: AccessToken) {
+  public static async batchSyncUser(apiConfig: ApiConfig, mediaId: string, toInvite = true, callback?: QySyncCallback, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.batchSyncUserUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -40,9 +40,9 @@ export class QySyncApi {
    * @param callback 回调信息
    * @param accessToken {AccessToken}
    */
-  public static async replaceUser(mediaId: string, toInvite = true, callback?: QySyncCallback, accessToken?: AccessToken) {
+  public static async replaceUser(apiConfig: ApiConfig, mediaId: string, toInvite = true, callback?: QySyncCallback, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.replaceUserUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -63,9 +63,9 @@ export class QySyncApi {
    * @param callback 回调信息
    * @param accessToken {AccessToken}
    */
-  public static async replaceParty(mediaId: string, callback?: QySyncCallback, accessToken?: AccessToken) {
+  public static async replaceParty(apiConfig: ApiConfig, mediaId: string, callback?: QySyncCallback, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.replacePartyUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -84,9 +84,9 @@ export class QySyncApi {
    * @param jobId  异步任务id，最大长度为64字节
    * @param accessToken {AccessToken}
    */
-  public static async getResult(jobId: string, accessToken?: AccessToken) {
+  public static async getResult(apiConfig: ApiConfig, jobId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getResultUrl, accessToken.getAccessToken, jobId)
     return HttpKit.getHttpDelegate.httpGet(url)

@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -17,8 +17,8 @@ export class MiniProgramApi {
    * @param signature 用户登录态签名
    * @param sigMethod 用户登录态签名的哈希方法
    */
-  public static async checkSessionKey(openId: string, signature: string, sigMethod: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async checkSessionKey(apiConfig: ApiConfig, openId: string, signature: string, sigMethod: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.checkSessionKeyUrl, (<AccessToken>accessToken).getAccessToken, signature, openId, sigMethod)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -41,8 +41,8 @@ export class MiniProgramApi {
    * 校验图片是否违规
    * @param imgPath 图片路径
    */
-  public static async imgSecCheck(imgPath: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async imgSecCheck(apiConfig: ApiConfig, imgPath: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.imgSecCheckUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.upload(url, imgPath, '')
   }
@@ -54,8 +54,8 @@ export class MiniProgramApi {
    * @param mediaUrl
    * @param mediaType
    */
-  public static async mediaCheckAsync(mediaUrl: string, mediaType: MiniProgramMediaType) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async mediaCheckAsync(apiConfig: ApiConfig, mediaUrl: string, mediaType: MiniProgramMediaType) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.mediaCheckAsyncUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -72,8 +72,8 @@ export class MiniProgramApi {
    * 校验文本是否违规
    * @param content
    */
-  public static async msgSecCheck(content: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async msgSecCheck(apiConfig: ApiConfig, content: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.msgSecCheckUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -91,8 +91,8 @@ export class MiniProgramApi {
    * @param sigMethod 用户登录态签名的哈希方法
    * @param key 要删除的数据key列表
    */
-  public static async removeUserStorage(openId: string, signature: string, sigMethod: string, keys: string[]) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async removeUserStorage(apiConfig: ApiConfig, openId: string, signature: string, sigMethod: string, keys: string[]) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.removeUserStorageUrl, (<AccessToken>accessToken).getAccessToken, signature, openId, sigMethod)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -111,8 +111,8 @@ export class MiniProgramApi {
    * @param sigMethod 用户登录态签名的哈希方法
    * @param kvList 要删除的数据列表 {"key":"1","value":0}
    */
-  public static async setUserInteractiveData(openId: string, signature: string, sigMethod: string, kvList: []) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async setUserInteractiveData(apiConfig: ApiConfig, openId: string, signature: string, sigMethod: string, kvList: []) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.setUserInteractiveDataUrl, (<AccessToken>accessToken).getAccessToken, signature, openId, sigMethod)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -131,8 +131,8 @@ export class MiniProgramApi {
    * @param sigMethod 用户登录态签名的哈希方法
    * @param kvList 要删除的数据列表 {"key":"1","value":0}
    */
-  public static async setUserStorage(openId: string, signature: string, sigMethod: string, kvList: []) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async setUserStorage(apiConfig: ApiConfig, openId: string, signature: string, sigMethod: string, kvList: []) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.setUserStorageUrl, (<AccessToken>accessToken).getAccessToken, signature, openId, sigMethod)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -147,8 +147,8 @@ export class MiniProgramApi {
   /**
    * 创建被分享动态消息的 activity_id
    */
-  public static async createActivityId() {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async createActivityId(apiConfig: ApiConfig) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.createActivieyIdUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -162,8 +162,8 @@ export class MiniProgramApi {
    * @param targetState 动态消息修改后的状态
    * @param templateInfo 动态消息对应的模板信息
    */
-  public static async setUpdatableMsg(activityId: string, targetState: number, templateInfo: any) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async setUpdatableMsg(apiConfig: ApiConfig, activityId: string, targetState: number, templateInfo: any) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.setUpdatableMsgUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -184,8 +184,8 @@ export class MiniProgramApi {
    * @param path
    * @param width
    */
-  public static async createQRCode(path: string, width: number = 430) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async createQRCode(apiConfig: ApiConfig, path: string, width: number = 430) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.createQRCodeUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -211,8 +211,15 @@ export class MiniProgramApi {
    * @param lineColor
    * @param isHyaline
    */
-  public static async getWxAcode(path: string, width: number = 430, autoColor: boolean = false, lineColor: object = { r: 0, g: 0, b: 0 }, isHyaline: boolean = false) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getWxAcode(
+    apiConfig: ApiConfig,
+    path: string,
+    width: number = 430,
+    autoColor: boolean = false,
+    lineColor: object = { r: 0, g: 0, b: 0 },
+    isHyaline: boolean = false
+  ) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getWxAcodeUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -243,6 +250,7 @@ export class MiniProgramApi {
    * @param isHyaline
    */
   public static async getUnlimited(
+    apiConfig: ApiConfig,
     scene: string,
     page: string,
     width: number = 430,
@@ -250,7 +258,7 @@ export class MiniProgramApi {
     lineColor: object = { r: 0, g: 0, b: 0 },
     isHyaline: boolean = false
   ) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getUnlimitedUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -279,8 +287,8 @@ export class MiniProgramApi {
    * @param data 模板内容
    * @param page 跳转页面路径
    */
-  public static async sendSubscribeMsg(toUser: string, templateId: string, data: any, page?: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async sendSubscribeMsg(apiConfig: ApiConfig, toUser: string, templateId: string, data: any, page?: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.sendSubscribeMsgUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -300,8 +308,8 @@ export class MiniProgramApi {
    * @param openId 支付用户唯一标识
    * @param transactionId 微信支付订单号
    */
-  public static async getPaidUnionidByTransactionId(openId: string, transactionId: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getPaidUnionidByTransactionId(apiConfig: ApiConfig, openId: string, transactionId: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getPaidUnionidByTransactionIdUrl, (<AccessToken>accessToken).getAccessToken, openId, transactionId)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -314,8 +322,8 @@ export class MiniProgramApi {
    * @param mchId 微信支付商户号
    * @param outTradeNo 微信支付商户订单号
    */
-  public static async getPaidUnionidByMchId(openId: string, mchId: string, outTradeNo: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getPaidUnionidByMchId(apiConfig: ApiConfig, openId: string, mchId: string, outTradeNo: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getPaidUnionidByMchIdUrl, (<AccessToken>accessToken).getAccessToken, openId, mchId, outTradeNo)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -328,8 +336,8 @@ export class MiniProgramApi {
    * @param jsonString 通过 wx.startSoterAuthentication 成功回调获得的 resultJSON 字段
    * @param jsonSignature 通过 wx.startSoterAuthentication 成功回调获得的 resultJSONSignature 字段
    */
-  public static async verifySoterSignature(openId: string, jsonString: string, jsonSignature: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async verifySoterSignature(apiConfig: ApiConfig, openId: string, jsonString: string, jsonSignature: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.verifySoterSignatureUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -350,8 +358,8 @@ export class MiniProgramApi {
    * @param clientMsgId 随机字符串 ID，调用方请求的唯一标识
    * @param data 服务提供方接口数据
    */
-  public static async serviceMarket(service: string, api: string, clientMsgId: string, data: any) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async serviceMarket(apiConfig: ApiConfig, service: string, api: string, clientMsgId: string, data: any) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.serviceMarketUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -372,8 +380,8 @@ export class MiniProgramApi {
    * 开发者提交的页面信息将可能被用于小程序搜索结果展示。
    * @param pages 小程序页面信息列表
    */
-  public static async submitPages(pages: any) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async submitPages(apiConfig: ApiConfig, pages: any) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.submitPagesUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -399,6 +407,7 @@ export class MiniProgramApi {
    * @param level 日志等级，返回大于等于level等级的日志，level的定义为2（Info）、4（Warn）、8（Error），如果指定为4，则返回大于等于4的日志，即返回Warn和Error日志。
    */
   public static async userLogSearch(
+    apiConfig: ApiConfig,
     date: string,
     begintime: number,
     endtime: number,
@@ -410,7 +419,7 @@ export class MiniProgramApi {
     filterMsg?: string,
     level?: number
   ) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.userLogSearchUrl, (<AccessToken>accessToken).getAccessToken, date, begintime, endtime, start, limit)
     if (traceId) {
       url.concat('&traceId=').concat(traceId)

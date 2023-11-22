@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -21,9 +21,9 @@ export class TagApi {
    * 创建标签
    * @param tagName
    */
-  public static async create(tagName: string, accessToken?: AccessToken) {
+  public static async create(apiConfig: ApiConfig, tagName: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.createTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -40,9 +40,9 @@ export class TagApi {
    * 获取公众号已创建的标签
    * @param accessToken
    */
-  public static async get(accessToken?: AccessToken) {
+  public static async get(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -54,9 +54,9 @@ export class TagApi {
    * @param tagName
    * @param accessToken
    */
-  public static async update(tagId: number, tagName: string, accessToken?: AccessToken) {
+  public static async update(apiConfig: ApiConfig, tagId: number, tagName: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -75,9 +75,9 @@ export class TagApi {
    * @param tagId
    * @param accessToken
    */
-  public static async delete(tagId: number, accessToken?: AccessToken) {
+  public static async delete(apiConfig: ApiConfig, tagId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -96,9 +96,9 @@ export class TagApi {
    * @param nextOpenid
    * @param accessToken
    */
-  public static async getUser(tagId: number, nextOpenid?: string, accessToken?: AccessToken) {
+  public static async getUser(apiConfig: ApiConfig, tagId: number, nextOpenid?: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -116,9 +116,9 @@ export class TagApi {
    * @param openIdList
    * @param accessToken
    */
-  public static async batchAddTag(tagId: number, openIdList: string[], accessToken?: AccessToken) {
+  public static async batchAddTag(apiConfig: ApiConfig, tagId: number, openIdList: string[], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.batchTaggingUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -136,9 +136,9 @@ export class TagApi {
    * @param openIdList
    * @param accessToken
    */
-  public static async batchDelTag(tagId: number, openIdList: string[], accessToken?: AccessToken) {
+  public static async batchDelTag(apiConfig: ApiConfig, tagId: number, openIdList: string[], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.batchUnTaggingUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -155,9 +155,9 @@ export class TagApi {
    * @param openId
    * @param accessToken
    */
-  public static async getUserTag(openId: string, accessToken?: AccessToken) {
+  public static async getUserTag(apiConfig: ApiConfig, openId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getIdListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

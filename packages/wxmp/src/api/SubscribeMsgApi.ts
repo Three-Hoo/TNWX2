@@ -32,8 +32,8 @@ export class SubscribeMsgApi {
    * @param subscribeMsg
    * @param accessToken
    */
-  public static async send(subscribeMsg: SubscribeMsg, accessToken?: AccessToken) {
-    return this.sendMsg(JSON.stringify(subscribeMsg), accessToken)
+  public static async send(apiConfig: ApiConfig, subscribeMsg: SubscribeMsg, accessToken?: AccessToken) {
+    return this.sendMsg(apiConfig, JSON.stringify(subscribeMsg), accessToken)
   }
 
   /**
@@ -41,9 +41,9 @@ export class SubscribeMsgApi {
    * @param json
    * @param accessToken
    */
-  public static async sendMsg(json: string, accessToken?: AccessToken) {
+  public static async sendMsg(apiConfig: ApiConfig, json: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.subscribeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, json)

@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -20,9 +20,9 @@ export class TemplateApi {
    * @param tempJson 模板消息JSON数据
    * @param accessToken 接口调用凭证
    */
-  public static async send(tempJson: string, accessToken?: AccessToken) {
+  public static async send(apiConfig: ApiConfig, tempJson: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.sendTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, tempJson)
@@ -34,9 +34,9 @@ export class TemplateApi {
    * @param industry_id2 公众号模板消息所属行业编号
    * @param accessToken 接口调用凭证
    */
-  public static async setIndustry(industry_id1: string, industry_id2: string, accessToken?: AccessToken) {
+  public static async setIndustry(apiConfig: ApiConfig, industry_id1: string, industry_id2: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.setIndustryUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -51,9 +51,9 @@ export class TemplateApi {
    * 获取设置的行业信息
    * @param accessToken 接口调用凭证
    */
-  public static async getIndustry(accessToken?: AccessToken) {
+  public static async getIndustry(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getIndustryUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -64,9 +64,9 @@ export class TemplateApi {
    * @param templateIdShort 模板库中模板的编号
    * @param accessToken 接口调用凭证
    */
-  public static async getTemplateId(templateIdShort: string, accessToken?: AccessToken) {
+  public static async getTemplateId(apiConfig: ApiConfig, templateIdShort: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getTemplateIdUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -82,9 +82,9 @@ export class TemplateApi {
    * @param templateId 公众帐号下模板消息ID
    * @param accessToken 接口调用凭证
    */
-  public static async delTemplate(templateId: string, accessToken?: AccessToken) {
+  public static async delTemplate(apiConfig: ApiConfig, templateId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -99,9 +99,9 @@ export class TemplateApi {
    * 获取模板列表
    * @param accessToken 接口调用凭证
    */
-  public static async getAllTemplate(accessToken?: AccessToken) {
+  public static async getAllTemplate(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getAllTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)

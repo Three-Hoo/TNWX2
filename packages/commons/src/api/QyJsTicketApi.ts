@@ -39,7 +39,7 @@ export class QyJsTicketApi {
       }
     }
     // 通过接口获取
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url: string
     if (type === QyJsApiType.CORP) {
       url = util.format(this.getCorpTicketUrl, accessToken.getAccessToken)

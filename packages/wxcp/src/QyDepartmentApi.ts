@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -18,9 +18,9 @@ export class QyDepartmentApi {
    * @param id 部门id，32位整型，指定时必须大于1
    * @param accessToken {AccessToken}
    */
-  public static async create(name: string, parentId: number, nameEn?: string, order?: number, id?: number, accessToken?: AccessToken) {
+  public static async create(apiConfig: ApiConfig, name: string, parentId: number, nameEn?: string, order?: number, id?: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.createUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -46,9 +46,9 @@ export class QyDepartmentApi {
    * @param order 在父部门中的次序值
    * @param accessToken {AccessToken}
    */
-  public static async update(id: number, name?: string, parentId?: number, nameEn?: string, order?: number, accessToken?: AccessToken) {
+  public static async update(apiConfig: ApiConfig, id: number, name?: string, parentId?: number, nameEn?: string, order?: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -70,9 +70,9 @@ export class QyDepartmentApi {
    * @param id 部门id
    * @param accessToken {AccessToken}
    */
-  public static async delete(id: number, accessToken?: AccessToken) {
+  public static async delete(apiConfig: ApiConfig, id: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteUrl, accessToken.getAccessToken, id)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -85,9 +85,9 @@ export class QyDepartmentApi {
    * @param id 部门id
    * @param accessToken {AccessToken}
    */
-  public static async get(id: number, accessToken?: AccessToken) {
+  public static async get(apiConfig: ApiConfig, id: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUrl, accessToken.getAccessToken, id)
     return HttpKit.getHttpDelegate.httpGet(url)

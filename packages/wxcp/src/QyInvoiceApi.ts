@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -15,9 +15,9 @@ export class QyInvoiceApi {
    * @param encryptCode 加密code
    * @param accessToken AccessToken
    */
-  public static async get(cardId: string, encryptCode: string, accessToken?: AccessToken) {
+  public static async get(apiConfig: ApiConfig, cardId: string, encryptCode: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -38,9 +38,9 @@ export class QyInvoiceApi {
    * @param reimburseStatus 发报销状态 INVOICE_REIMBURSE_INIT:发票初始状态，未锁定; INVOICE_REIMBURSE_LOCK:发票已锁定，无法重复提交报销;INVOICE_REIMBURSE_CLOSURE:发票已核销，从用户卡包中移除
    * @param accessToken AccessToken
    */
-  public static async update(cardId: string, encryptCode: string, reimburseStatus: string, accessToken?: AccessToken) {
+  public static async update(apiConfig: ApiConfig, cardId: string, encryptCode: string, reimburseStatus: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -62,9 +62,9 @@ export class QyInvoiceApi {
    * @param invoiceList 发票列表
    * @param accessToken AccessToken
    */
-  public static async batchUpdate(openId: string, reimburseStatus: string, invoiceList: Array<QyInvoice>, accessToken?: AccessToken) {
+  public static async batchUpdate(apiConfig: ApiConfig, openId: string, reimburseStatus: string, invoiceList: Array<QyInvoice>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.batchUpdateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -84,9 +84,9 @@ export class QyInvoiceApi {
    * @param itemList 发票列表
    * @param accessToken AccessToken
    */
-  public static async batchGet(itemList: Array<QyInvoice>, accessToken?: AccessToken) {
+  public static async batchGet(apiConfig: ApiConfig, itemList: Array<QyInvoice>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.batchGetUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

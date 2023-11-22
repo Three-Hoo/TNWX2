@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -22,9 +22,9 @@ export class MenuApi {
    * @param menuJson
    * @param accessToken
    */
-  public static async create(menuJson: string, accessToken?: AccessToken) {
+  public static async create(apiConfig: ApiConfig, menuJson: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.createMenuUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, menuJson)
@@ -34,9 +34,9 @@ export class MenuApi {
    * 删除菜单
    * @param accessToken
    */
-  public static async delete(accessToken?: AccessToken) {
+  public static async delete(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteMenuUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -46,9 +46,9 @@ export class MenuApi {
    * 查询菜单
    * @param accessToken
    */
-  public static async get(accessToken?: AccessToken) {
+  public static async get(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getMenuUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -57,9 +57,9 @@ export class MenuApi {
   /**
    * @param accessToken
    */
-  public static async getCurrentSelfMenu(accessToken?: AccessToken) {
+  public static async getCurrentSelfMenu(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getSelfMenuInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -69,9 +69,9 @@ export class MenuApi {
    * 添加个性化菜单
    * @param menuJson
    */
-  public static async addConditional(menuJson: string, accessToken?: AccessToken) {
+  public static async addConditional(apiConfig: ApiConfig, menuJson: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addConditionalUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, menuJson)
@@ -82,9 +82,9 @@ export class MenuApi {
    * @param menuId
    * @param accessToken
    */
-  public static async deleteConditional(menuId: string, accessToken?: AccessToken) {
+  public static async deleteConditional(apiConfig: ApiConfig, menuId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delConditionalUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -100,9 +100,9 @@ export class MenuApi {
    * @param openId
    * @param accessToken
    */
-  public static async tryMatch(openId: string, accessToken?: AccessToken) {
+  public static async tryMatch(apiConfig: ApiConfig, openId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.tryMatchUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

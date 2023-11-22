@@ -1,4 +1,4 @@
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
 import { ComSubscribeMsgApi } from '@tnwx2/commons'
@@ -15,31 +15,31 @@ export class MiniSubscribeMsgApi {
    * @param kidList 开发者自行组合好的模板关键词列表，最多支持5个，最少2个关键词组合
    * @param sceneDesc 服务场景描述，15个字以内
    */
-  public static async addTemplate(tid: string, kidList: Array<Number>, sceneDesc?: string) {
-    ComSubscribeMsgApi.addTemplate(tid, kidList, sceneDesc)
+  public static async addTemplate(apiConfig: ApiConfig, tid: string, kidList: Array<Number>, sceneDesc?: string) {
+    ComSubscribeMsgApi.addTemplate(apiConfig, tid, kidList, sceneDesc)
   }
 
   /**
    * 删除帐号下的个人模板
    * @param priTmplId 要删除的模板id
    */
-  public static async delTemplate(priTmplId: string) {
-    ComSubscribeMsgApi.delTemplate(priTmplId)
+  public static async delTemplate(apiConfig: ApiConfig, priTmplId: string) {
+    ComSubscribeMsgApi.delTemplate(apiConfig, priTmplId)
   }
 
   /**
    * 获取小程序账号的类目
    */
-  public static async getCategory() {
-    ComSubscribeMsgApi.getCategory()
+  public static async getCategory(apiConfig: ApiConfig) {
+    ComSubscribeMsgApi.getCategory(apiConfig)
   }
 
   /**
    * 获取模板标题下的关键词列表
    * @param tid 模板标题 id
    */
-  public static async getPubTemplateKeyWords(tid: string) {
-    ComSubscribeMsgApi.getPubTemplateKeyWords(tid)
+  public static async getPubTemplateKeyWords(apiConfig: ApiConfig, tid: string) {
+    ComSubscribeMsgApi.getPubTemplateKeyWords(apiConfig, tid)
   }
 
   /**
@@ -48,15 +48,15 @@ export class MiniSubscribeMsgApi {
    * @param start 用于分页，表示从 start 开始。从 0 开始计数。
    * @param limit 用于分页，表示拉取 limit 条记录。最大为 30。
    */
-  public static async getPubTemplateTitles(ids: Array<Number>, start = 0, limit = 30) {
-    ComSubscribeMsgApi.getPubTemplateTitles(ids, start, limit)
+  public static async getPubTemplateTitles(apiConfig: ApiConfig, ids: Array<Number>, start = 0, limit = 30) {
+    ComSubscribeMsgApi.getPubTemplateTitles(apiConfig, ids, start, limit)
   }
 
   /**
    * 获取当前帐号下的个人模板列表
    */
-  public static async getTemplate() {
-    ComSubscribeMsgApi.getTemplate()
+  public static async getTemplate(apiConfig: ApiConfig) {
+    ComSubscribeMsgApi.getTemplate(apiConfig)
   }
 
   private static sendMessageUrl: string = 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=%s'
@@ -70,8 +70,8 @@ export class MiniSubscribeMsgApi {
    * @param lang 进入小程序查看的语言类型，支持zh_CN(简体中文)、en_US(英文)、zh_HK(繁体中文)、zh_TW(繁体中文)，默认为zh_CN
    * @param page 点击模板卡片后的跳转页面
    */
-  public static async sendSubMessage(touser: string, templateId: string, data: any, miniprogramState = 'formal', lang = 'zh_CN', page?: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async sendSubMessage(apiConfig: ApiConfig, touser: string, templateId: string, data: any, miniprogramState = 'formal', lang = 'zh_CN', page?: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.sendMessageUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

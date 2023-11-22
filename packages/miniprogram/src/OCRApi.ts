@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -14,8 +14,8 @@ export class OCRApi {
    * @param OcrType 接口URL
    * @param imgUrl 图片的URL
    */
-  public static async ocrByUrl(OcrType: OCRType, imgUrl: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async ocrByUrl(apiConfig: ApiConfig, OcrType: OCRType, imgUrl: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(OcrType, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url.concat('&img_url=').concat(imgUrl))
   }
@@ -25,8 +25,8 @@ export class OCRApi {
    * @param ocrType 接口URL
    * @param filePath 图片的文件路径
    */
-  public static async ocrByFile(ocrType: OCRType, filePath: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async ocrByFile(apiConfig: ApiConfig, ocrType: OCRType, filePath: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(ocrType, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.upload(url, filePath)
   }

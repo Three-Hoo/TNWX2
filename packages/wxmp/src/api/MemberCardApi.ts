@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -14,9 +14,9 @@ export class MemberCardApi {
    * 接口激活
    * @param jsonStr
    */
-  public static async activate(jsonStr: string, accessToken?: AccessToken) {
+  public static async activate(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.activateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(jsonStr))
@@ -27,9 +27,9 @@ export class MemberCardApi {
    * 普通一键激活-设置开卡字段接口
    * @param jsonStr
    */
-  public static async setActivateUserForm(jsonStr: string, accessToken?: AccessToken) {
+  public static async setActivateUserForm(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.setActivateUserFormUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(jsonStr))
@@ -40,9 +40,9 @@ export class MemberCardApi {
    * 跳转型一键激活 获取用户提交资料
    * @param activateTicket
    */
-  public static async getActivateTempInfo(activateTicket: string, accessToken?: AccessToken) {
+  public static async getActivateTempInfo(apiConfig: ApiConfig, activateTicket: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getActivateTempInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -57,9 +57,9 @@ export class MemberCardApi {
    * 更新会员信息
    * @param jsonStr
    */
-  public static async updateUser(jsonStr: string, accessToken?: AccessToken) {
+  public static async updateUser(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateUserUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -71,9 +71,9 @@ export class MemberCardApi {
    * @param cardId
    * @param code
    */
-  public static async getUserInfo(cardId: string, code: string, accessToken?: AccessToken) {
+  public static async getUserInfo(apiConfig: ApiConfig, cardId: string, code: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -90,9 +90,9 @@ export class MemberCardApi {
    * 设置支付后投放卡券接口
    * @param jsonStr
    */
-  public static async payGiftCardAdd(jsonStr: string, accessToken?: AccessToken) {
+  public static async payGiftCardAdd(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.payGiftCardAddUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -103,9 +103,9 @@ export class MemberCardApi {
    * 删除支付后投放卡券规则接口
    * @param ruleId
    */
-  public static async payGiftCardDel(ruleId: string, accessToken?: AccessToken) {
+  public static async payGiftCardDel(apiConfig: ApiConfig, ruleId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.payGiftCardDelUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -121,9 +121,9 @@ export class MemberCardApi {
    * 查询支付后投放卡券规则详情接口
    * @param ruleId
    */
-  public static async payGiftCardGet(ruleId: string, accessToken?: AccessToken) {
+  public static async payGiftCardGet(apiConfig: ApiConfig, ruleId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.payGiftCardGetUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -141,9 +141,16 @@ export class MemberCardApi {
    * @param count
    * @param type
    */
-  public static async payGiftCardBatchGet(effective: boolean, offset: number, count: number, type: string = 'RULE_TYPE_PAY_MEMBER_CARD', accessToken?: AccessToken) {
+  public static async payGiftCardBatchGet(
+    apiConfig: ApiConfig,
+    effective: boolean,
+    offset: number,
+    count: number,
+    type: string = 'RULE_TYPE_PAY_MEMBER_CARD',
+    accessToken?: AccessToken
+  ) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.payGiftCardBatchGetUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -163,9 +170,9 @@ export class MemberCardApi {
    * @param endDate 查询数据的截至时间
    * @param condSource 卡券来源，0为公众平台创建的卡券数据、1是API创建的卡券数据
    */
-  public static async getMemberCardInfo(beginDate: string, endDate: string, condSource: number = 0, accessToken?: AccessToken) {
+  public static async getMemberCardInfo(apiConfig: ApiConfig, beginDate: string, endDate: string, condSource: number = 0, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getMemberCardInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -185,9 +192,9 @@ export class MemberCardApi {
    * @param endDate 查询数据的截至时间
    * @param cardId 卡券id
    */
-  public static async getMemberCardDetail(beginDate: string, endDate: string, cardId: string, accessToken?: AccessToken) {
+  public static async getMemberCardDetail(apiConfig: ApiConfig, beginDate: string, endDate: string, cardId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getMemberCardDetailUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

@@ -4,7 +4,7 @@
  * @description 模板消息
  */
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 export class UserApi {
@@ -23,8 +23,8 @@ export class UserApi {
    *  @param openId
    *  @param remark
    */
-  public static async updateRemark(openId: string, remark: string) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async updateRemark(apiConfig: ApiConfig, openId: string, remark: string) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.updateRemarkUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -39,8 +39,8 @@ export class UserApi {
    *  @param openId
    *  @param remark
    */
-  public static async getFollowers(nextOpenid?: string) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async getFollowers(apiConfig: ApiConfig, nextOpenid?: string) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getUserUrl, accessToken.getAccessToken)
     if (nextOpenid) {
       url += '&next_openid=' + nextOpenid
@@ -52,8 +52,8 @@ export class UserApi {
    *  @param openId
    *  @param lang
    */
-  public static async getUserInfo(openId: string, lang?: string) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async getUserInfo(apiConfig: ApiConfig, openId: string, lang?: string) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getUserInfoUrl, accessToken.getAccessToken, openId)
     if (lang) {
       url += '&lang=' + lang
@@ -64,8 +64,9 @@ export class UserApi {
    *  批量获取用户基本信息
    *  @param userList
    */
-  public static async batchGetUserInfo(userList: BatchUserInfo[]) {
+  public static async batchGetUserInfo(apiConfig: ApiConfig, userList: BatchUserInfo[]) {
     return this.batchUserInfo(
+      apiConfig,
       JSON.stringify({
         user_list: userList
       })
@@ -76,8 +77,8 @@ export class UserApi {
    *  批量获取用户基本信息
    *  @param json
    */
-  public static async batchUserInfo(json: string) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async batchUserInfo(apiConfig: ApiConfig, json: string) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.batchGetUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, json)
   }
@@ -86,8 +87,8 @@ export class UserApi {
    *  获取公众号的黑名单列表
    *  @param beginOpenId 为空时默认从开头拉取
    */
-  public static async getBlackList(beginOpenId?: string) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async getBlackList(apiConfig: ApiConfig, beginOpenId?: string) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getBlackListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -100,8 +101,8 @@ export class UserApi {
    *  拉黑用户
    *  @param openidList  需要拉入黑名单的用户的openid，一次拉黑最多允许20个
    */
-  public static async batchBlackList(openidList: string[]) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async batchBlackList(apiConfig: ApiConfig, openidList: string[]) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.batchBlackListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -115,8 +116,8 @@ export class UserApi {
    *  取消拉黑用户
    *  @param openidList
    */
-  public static async batchUnBlackList(openidList: string[]) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async batchUnBlackList(apiConfig: ApiConfig, openidList: string[]) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.batchUnBlackListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

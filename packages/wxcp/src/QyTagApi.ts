@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -15,9 +15,9 @@ export class QyTagApi {
    * @param tagId 标签id
    * @param accessToken {AccessToken}
    */
-  public static async create(tagName: string, tagId: number, accessToken?: AccessToken) {
+  public static async create(apiConfig: ApiConfig, tagName: string, tagId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.createUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -37,9 +37,9 @@ export class QyTagApi {
    * @param tagId 标签id
    * @param accessToken {AccessToken}
    */
-  public static async update(tagName: string, tagId: number, accessToken?: AccessToken) {
+  public static async update(apiConfig: ApiConfig, tagName: string, tagId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -58,9 +58,9 @@ export class QyTagApi {
    * @param tagId 标签id
    * @param accessToken {AccessToken}
    */
-  public static async delete(tagId: number, accessToken?: AccessToken) {
+  public static async delete(apiConfig: ApiConfig, tagId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteUrl, accessToken.getAccessToken, tagId)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -73,9 +73,9 @@ export class QyTagApi {
    * @param tagId 标签id
    * @param accessToken {AccessToken}
    */
-  public static async getUserByTagId(tagId: number, accessToken?: AccessToken) {
+  public static async getUserByTagId(apiConfig: ApiConfig, tagId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserUrl, accessToken.getAccessToken, tagId)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -90,9 +90,9 @@ export class QyTagApi {
    * @param partyList 企业部门id列表
    * @param accessToken {AccessToken}
    */
-  public static async addTagUsers(tagId: number, userList?: Array<string>, partyList?: Array<number>, accessToken?: AccessToken) {
+  public static async addTagUsers(apiConfig: ApiConfig, tagId: number, userList?: Array<string>, partyList?: Array<number>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addTagUsersUrl, accessToken.getAccessToken, tagId)
     return HttpKit.getHttpDelegate.httpPost(
@@ -114,9 +114,9 @@ export class QyTagApi {
    * @param partyList 企业部门id列表
    * @param accessToken {AccessToken}
    */
-  public static async delTagUsers(tagId: number, userList?: Array<string>, partyList?: Array<number>, accessToken?: AccessToken) {
+  public static async delTagUsers(apiConfig: ApiConfig, tagId: number, userList?: Array<string>, partyList?: Array<number>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delTagUsersUrl, accessToken.getAccessToken, tagId)
     return HttpKit.getHttpDelegate.httpPost(
@@ -135,9 +135,9 @@ export class QyTagApi {
    * 获取标签列表
    * @param accessToken {AccessToken}
    */
-  public static async getTagList(accessToken?: AccessToken) {
+  public static async getTagList(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)

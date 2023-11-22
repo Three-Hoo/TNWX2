@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -19,9 +19,9 @@ export class ShakeAroundPageApi {
    * @param iconUrl 在摇一摇页面展示的图片。图片需先上传至微信侧服务器，用“素材管理-上传图片素材”接口上传图片，返回的图片URL再配置在此处
    * @param accessToken
    */
-  public static async addPage(title: string, description: string, pageUrl: string, iconUrl: number, comment?: string, accessToken?: AccessToken) {
+  public static async addPage(apiConfig: ApiConfig, title: string, description: string, pageUrl: string, iconUrl: number, comment?: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addPageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -47,9 +47,18 @@ export class ShakeAroundPageApi {
    * @param comment 页面的备注信息，不超过15个汉字或30个英文字母
    * @param accessToken
    */
-  public static async updatePage(pageId: number, title: string, description: string, pageUrl: string, iconUrl: number, comment?: string, accessToken?: AccessToken) {
+  public static async updatePage(
+    apiConfig: ApiConfig,
+    pageId: number,
+    title: string,
+    description: string,
+    pageUrl: string,
+    iconUrl: number,
+    comment?: string,
+    accessToken?: AccessToken
+  ) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updatePageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -71,9 +80,9 @@ export class ShakeAroundPageApi {
    * @param pageIds 指定页面的id列表
    * @param accessToken
    */
-  public static async searchPageByIds(pageIds: number[], accessToken?: AccessToken) {
+  public static async searchPageByIds(apiConfig: ApiConfig, pageIds: number[], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.searchPageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -91,13 +100,13 @@ export class ShakeAroundPageApi {
    * @param count 待查询的页面数量，不能超过50个
    * @param accessToken
    */
-  public static async searchPage(begin: number, count: number, accessToken?: AccessToken) {
+  public static async searchPage(apiConfig: ApiConfig, begin: number, count: number, accessToken?: AccessToken) {
     if (begin < 0) begin = 0
     if (count < 1) count = 1
     if (count > 50) count = 50
 
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.searchPageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -116,9 +125,9 @@ export class ShakeAroundPageApi {
    * @param pageId 指定页面的id
    * @param accessToken
    */
-  public static async deletePage(pageId: number, accessToken?: AccessToken) {
+  public static async deletePage(apiConfig: ApiConfig, pageId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deletePageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

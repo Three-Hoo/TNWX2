@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 import { DeviceIdentifier } from './ShakeAroundDeviceApi'
 
@@ -17,9 +17,9 @@ export class ShakeAroundStatisticsApi {
    * @param endDate 结束日期时间戳，最长时间跨度为30天，单位为秒
    * @param accessToken
    */
-  public static async getByDevice(deviceIdentifier: DeviceIdentifier, beginDate: number, endDate: number, accessToken?: AccessToken) {
+  public static async getByDevice(apiConfig: ApiConfig, deviceIdentifier: DeviceIdentifier, beginDate: number, endDate: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.statisticsDeviceUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -39,9 +39,9 @@ export class ShakeAroundStatisticsApi {
    * @param pageIndex 指定查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
    * @param accessToken
    */
-  public static async getDeviceList(date: number, pageIndex: number, accessToken?: AccessToken) {
+  public static async getDeviceList(apiConfig: ApiConfig, date: number, pageIndex: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.statisticsDeviceListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -61,9 +61,9 @@ export class ShakeAroundStatisticsApi {
    * @param endDate 结束日期时间戳，最长时间跨度为30天，单位为秒
    * @param accessToken
    */
-  public static async getByPage(pageId: number, beginDate: number, endDate: number, accessToken?: AccessToken) {
+  public static async getByPage(apiConfig: ApiConfig, pageId: number, beginDate: number, endDate: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.statisticsPageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -83,9 +83,9 @@ export class ShakeAroundStatisticsApi {
    * @param pageIndex 指定查询的结果页序号；返回结果按摇周边人数降序排序，每50条记录为一页
    * @param accessToken
    */
-  public static async getPageList(date: number, pageIndex: number, accessToken?: AccessToken) {
+  public static async getPageList(apiConfig: ApiConfig, date: number, pageIndex: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.statisticsPageListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

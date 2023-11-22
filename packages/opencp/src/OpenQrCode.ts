@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, OpenCpAccessTokenApi, AccessTokenType } from '@tnwx2/accesstoken'
+import { AccessToken, OpenCpAccessTokenApi, AccessTokenType, ApiConfig } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -18,8 +18,8 @@ export class OpenQrCode {
    * @param state 用户自定义的状态值
    * @param followUser 跟进人的userid，必须是服务商所在企业的成员
    */
-  public static async getRegisterCode(templateId: string, corpName?: string, adminName?: string, adminMobile?: string, state?: string, followUser?: string) {
-    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(AccessTokenType.PROVIDER_TOKEN)
+  public static async getRegisterCode(apiConfig: ApiConfig, templateId: string, corpName?: string, adminName?: string, adminMobile?: string, state?: string, followUser?: string) {
+    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(apiConfig, AccessTokenType.PROVIDER_TOKEN)
     let url = util.format(this.getRegisterCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -40,8 +40,8 @@ export class OpenQrCode {
    * 查询注册状态
    * @param registerCode 查询的注册码
    */
-  public static async getRegisterCodeInfo(registerCode: string) {
-    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(AccessTokenType.PROVIDER_TOKEN)
+  public static async getRegisterCodeInfo(apiConfig: ApiConfig, registerCode: string) {
+    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(apiConfig, AccessTokenType.PROVIDER_TOKEN)
     let url = util.format(this.getRegisterCodeInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -18,14 +18,14 @@ export class ShakeAroundDeviceApi {
    * @param poiId 设备关联的门店ID，关联门店后，在门店1KM的范围内有优先摇出信息的机会。门店相关信息具体可 查看门店相关的接口文档
    * @param accessToken
    */
-  public static async applyId(quantity: number, applyReason: string, comment?: string, poiId?: number, accessToken?: AccessToken) {
+  public static async applyId(apiConfig: ApiConfig, quantity: number, applyReason: string, comment?: string, poiId?: number, accessToken?: AccessToken) {
     let map = new Map<string, any>()
     map.set('quantity', quantity)
     map.set('apply_reason', applyReason)
     if (comment) map.set('comment', comment)
     if (poiId) map.set('poi_id', poiId)
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.applyIdUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -37,9 +37,9 @@ export class ShakeAroundDeviceApi {
    * @param applyId 批次ID，申请设备ID时所返回的批次ID
    * @param accessToken
    */
-  public static async getApplyStatus(applyId: number, accessToken?: AccessToken) {
+  public static async getApplyStatus(apiConfig: ApiConfig, applyId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.applyStatusUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -57,9 +57,9 @@ export class ShakeAroundDeviceApi {
    * @param comment 	设备的备注信息，不超过15个汉字或30个英文字母。
    * @param accessToken
    */
-  public static async updateDeviceInfo(deviceIdentifier: DeviceIdentifier, comment: string, accessToken?: AccessToken) {
+  public static async updateDeviceInfo(apiConfig: ApiConfig, deviceIdentifier: DeviceIdentifier, comment: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -80,7 +80,7 @@ export class ShakeAroundDeviceApi {
    * @param poiAppid 当Type为2时，必填。关联门店所归属的公众账号的APPID
    * @param accessToken
    */
-  public static async bindLocation(deviceIdentifier: DeviceIdentifier, poiId: number, type: number = 1, poiAppid?: string, accessToken?: AccessToken) {
+  public static async bindLocation(apiConfig: ApiConfig, deviceIdentifier: DeviceIdentifier, poiId: number, type: number = 1, poiAppid?: string, accessToken?: AccessToken) {
     let map = new Map<string, any>()
     map.set('device_identifier', deviceIdentifier)
     map.set('poi_id', poiId)
@@ -89,7 +89,7 @@ export class ShakeAroundDeviceApi {
       if (poiAppid) map.set('poi_appid', poiAppid)
     }
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.bindLocationUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify(map))
@@ -101,9 +101,9 @@ export class ShakeAroundDeviceApi {
    * @param deviceIdentifier 指定的设备ID
    * @param accessToken
    */
-  public static async searchByDevice(deviceIdentifier: DeviceIdentifier, accessToken?: AccessToken) {
+  public static async searchByDevice(apiConfig: ApiConfig, deviceIdentifier: DeviceIdentifier, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.searchUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -121,13 +121,13 @@ export class ShakeAroundDeviceApi {
    * @param count 待查询的设备数量，不能超过50个
    * @param accessToken
    */
-  public static async searchPage(lastSeen: number, count: number, accessToken?: AccessToken) {
+  public static async searchPage(apiConfig: ApiConfig, lastSeen: number, count: number, accessToken?: AccessToken) {
     if (lastSeen < 0) lastSeen = 0
     if (count > 50) count = 50
     if (count < 1) count = 1
 
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.searchUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -147,13 +147,13 @@ export class ShakeAroundDeviceApi {
    * @param count 待查询的设备数量，不能超过50个
    * @param accessToken
    */
-  public static async searchPageByApplyId(applyId: number, lastSeen: number, count: number, accessToken?: AccessToken) {
+  public static async searchPageByApplyId(apiConfig: ApiConfig, applyId: number, lastSeen: number, count: number, accessToken?: AccessToken) {
     if (lastSeen < 0) lastSeen = 0
     if (count > 50) count = 50
     if (count < 1) count = 1
 
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.searchUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -174,9 +174,9 @@ export class ShakeAroundDeviceApi {
    * @param pageIds 待关联的页面列表
    * @param accessToken
    */
-  public static async bindPage(deviceIdentifier: DeviceIdentifier, pageIds: number[], accessToken?: AccessToken) {
+  public static async bindPage(apiConfig: ApiConfig, deviceIdentifier: DeviceIdentifier, pageIds: number[], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.bindPageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -194,9 +194,9 @@ export class ShakeAroundDeviceApi {
    * @param deviceIdentifier 指定页面的设备ID
    * @param accessToken
    */
-  public static async relationSearch(deviceIdentifier: DeviceIdentifier, accessToken?: AccessToken) {
+  public static async relationSearch(apiConfig: ApiConfig, deviceIdentifier: DeviceIdentifier, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.relationSearchUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -214,13 +214,13 @@ export class ShakeAroundDeviceApi {
    * @param count 待查询的关联关系数量，不能超过50个
    * @param accessToken
    */
-  public static async relationSearchByPage(pageId: number, begin: number, count: number, accessToken?: AccessToken) {
+  public static async relationSearchByPage(apiConfig: ApiConfig, pageId: number, begin: number, count: number, accessToken?: AccessToken) {
     if (begin < 0) begin = 0
     if (count > 50) count = 50
     if (count < 1) count = 1
 
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.relationSearchUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -240,9 +240,9 @@ export class ShakeAroundDeviceApi {
    * @param groupName 分组名称，不超过100汉字或200个英文字母
    * @param accessToken
    */
-  public static async addGroup(groupName: string, accessToken?: AccessToken) {
+  public static async addGroup(apiConfig: ApiConfig, groupName: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addGroupUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -260,9 +260,9 @@ export class ShakeAroundDeviceApi {
    * @param groupName 分组名称，不超过100汉字或200个英文字母
    * @param accessToken
    */
-  public static async updateGroup(groupId: number, groupName: string, accessToken?: AccessToken) {
+  public static async updateGroup(apiConfig: ApiConfig, groupId: number, groupName: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateGroupUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -280,9 +280,9 @@ export class ShakeAroundDeviceApi {
    * @param groupId 分组唯一标识，全局唯一
    * @param accessToken
    */
-  public static async deleteGroup(groupId: number, accessToken?: AccessToken) {
+  public static async deleteGroup(apiConfig: ApiConfig, groupId: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteGroupUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -300,9 +300,9 @@ export class ShakeAroundDeviceApi {
    * @param count 待查询的分组数量，不能超过1000个
    * @param accessToken
    */
-  public static async getGroupList(begin: number, count: number, accessToken?: AccessToken) {
+  public static async getGroupList(apiConfig: ApiConfig, begin: number, count: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getGroupListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -322,9 +322,9 @@ export class ShakeAroundDeviceApi {
    * @param count 待查询的分组数量，不能超过1000个
    * @param accessToken
    */
-  public static async getGroupDetail(groupId: number, begin: number, count: number, accessToken?: AccessToken) {
+  public static async getGroupDetail(apiConfig: ApiConfig, groupId: number, begin: number, count: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getGroupDetailUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -344,9 +344,9 @@ export class ShakeAroundDeviceApi {
    * @param deviceIdentifierList 	设备id列表 每次添加设备上限为1000
    * @param accessToken
    */
-  public static async addDeviceToGroup(groupId: number, deviceIdentifierList: DeviceIdentifier[], accessToken?: AccessToken) {
+  public static async addDeviceToGroup(apiConfig: ApiConfig, groupId: number, deviceIdentifierList: DeviceIdentifier[], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addDeviceUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -365,9 +365,9 @@ export class ShakeAroundDeviceApi {
    * @param deviceIdentifierList 设备id列表 每次删除设备上限为1000
    * @param accessToken
    */
-  public static async deleteDeviceFromGroup(groupId: number, deviceIdentifierList: DeviceIdentifier[], accessToken?: AccessToken) {
+  public static async deleteDeviceFromGroup(apiConfig: ApiConfig, groupId: number, deviceIdentifierList: DeviceIdentifier[], accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteGroupDeviceUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

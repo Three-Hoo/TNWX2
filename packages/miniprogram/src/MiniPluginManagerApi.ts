@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -17,8 +17,8 @@ export class MiniPluginManagerApi {
    * @param appId 插件 appId
    * @param reason 申请使用理由
    */
-  public static async applyPlugin(appId: string, reason?: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async applyPlugin(apiConfig: ApiConfig, appId: string, reason?: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.pluginUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -35,8 +35,8 @@ export class MiniPluginManagerApi {
    * @param page 要拉取第几页的数据
    * @param num 每页的记录数
    */
-  public static async getPluginDevApplyList(page = 0, num = 20) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getPluginDevApplyList(apiConfig: ApiConfig, page = 0, num = 20) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.devPluginUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -51,8 +51,8 @@ export class MiniPluginManagerApi {
   /**
    * 查询已添加的插件
    */
-  public static async getPluginList() {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getPluginList(apiConfig: ApiConfig) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.pluginUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -68,8 +68,8 @@ export class MiniPluginManagerApi {
    * @param appId 使用者的 appId,同意申请时填写
    * @param reason 拒绝理由,拒绝申请时填写
    */
-  public static async setDevPluginApplyStatus(action: string, appId?: string, reason?: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async setDevPluginApplyStatus(apiConfig: ApiConfig, action: string, appId?: string, reason?: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.devPluginUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -85,8 +85,8 @@ export class MiniPluginManagerApi {
    * 删除已添加的插件
    * @param appId 插件 appId
    */
-  public static async unbindPlugin(appId: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async unbindPlugin(apiConfig: ApiConfig, appId: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.pluginUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

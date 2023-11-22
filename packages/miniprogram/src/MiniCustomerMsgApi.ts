@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -13,8 +13,8 @@ export class MiniCustomerMsgApi {
    * 获取客服消息内的临时素材。即下载临时的多媒体文件。目前小程序仅支持下载图片文件
    * @param mediaId 媒体文件 ID
    */
-  public static async getTempMedia(mediaId: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async getTempMedia(apiConfig: ApiConfig, mediaId: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getTempMediaUrl, (<AccessToken>accessToken).getAccessToken, mediaId)
     return HttpKit.getHttpDelegate.httpGet(url, {
       headers: { 'Content-type': 'application/json' },
@@ -30,8 +30,8 @@ export class MiniCustomerMsgApi {
    * @param msgType 消息类型
    * @param data 消息对应的数据
    */
-  public static async send(openId: string, msgType: MiniCSRMsgType, data?: object) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async send(apiConfig: ApiConfig, openId: string, msgType: MiniCSRMsgType, data?: object) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.sendUrl, (<AccessToken>accessToken).getAccessToken)
     let obj = {
       touser: openId,
@@ -55,8 +55,8 @@ export class MiniCustomerMsgApi {
    * @param openId 用户的 openId
    * @param command 命令
    */
-  public static async setTyping(openId: string, command: string) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async setTyping(apiConfig: ApiConfig, openId: string, command: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.setTypingUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -74,8 +74,8 @@ export class MiniCustomerMsgApi {
    * @param filePath 文件路径
    * @param mediaType 文件类型
    */
-  public static async uploadMedia(filePath: string, mediaType: string) {
-    let accessToken: AccessToken = await AccessTokenApi.getAccessToken()
+  public static async uploadMedia(apiConfig: ApiConfig, filePath: string, mediaType: string) {
+    let accessToken: AccessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.uploadUrl, accessToken.getAccessToken, mediaType)
     return HttpKit.getHttpDelegate.upload(url, filePath)
   }

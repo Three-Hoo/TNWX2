@@ -1,6 +1,5 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
 
 import { QyFileMsg } from './entity/QyFileMsg'
 import { QyVideoMsg } from './entity/QyVideoMsg'
@@ -13,6 +12,7 @@ import { QyMpNewsMsg } from './entity/QyMpNewsMsg'
 import { QyTaskCardMsg } from './entity/QyTaskCardMsg'
 import { QyMiniProgramNoticeMsg } from './entity/QyMiniProgramNoticeMsg'
 import { QyMarkDownMsg } from './entity/QyMarkDownMsg'
+import { ApiConfig, AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -25,8 +25,8 @@ export class QySendMsgApi {
    * 查询应用消息发送统计
    * @param timeType 查询哪天的数据，0：当天；1：昨天。默认为0
    */
-  public static async getTatistics(timeType = 0) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getTatistics(apiConfig: ApiConfig, timeType = 0) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getStatisticsUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -43,9 +43,9 @@ export class QySendMsgApi {
    * @param {string} jsonStr
    * @param accessToken
    */
-  public static async sendMessage(jsonStr: string, accessToken?: AccessToken) {
+  public static async sendMessage(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.sendMessageUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -56,8 +56,8 @@ export class QySendMsgApi {
    * @param {QyTextMsg} text
    * @param accessToken
    */
-  public static async sendTextMessage(text: QyTextMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(text), accessToken)
+  public static async sendTextMessage(apiConfig: ApiConfig, text: QyTextMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(text), accessToken)
   }
 
   /**
@@ -65,8 +65,8 @@ export class QySendMsgApi {
    * @param {QyImageMsg} image
    * @param accessToken
    */
-  public static async sendImageMessage(image: QyImageMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(image), accessToken)
+  public static async sendImageMessage(apiConfig: ApiConfig, image: QyImageMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(image), accessToken)
   }
 
   /**
@@ -74,8 +74,8 @@ export class QySendMsgApi {
    * @param voice
    * @param accessToken
    */
-  public static async sendVoiceMessage(voice: QyVoiceMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(voice), accessToken)
+  public static async sendVoiceMessage(apiConfig: ApiConfig, voice: QyVoiceMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(voice), accessToken)
   }
 
   /**
@@ -83,16 +83,16 @@ export class QySendMsgApi {
    * @param video
    * @param accessToken
    */
-  public static async sendVideoMessage(video: QyVideoMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(video), accessToken)
+  public static async sendVideoMessage(apiConfig: ApiConfig, video: QyVideoMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(video), accessToken)
   }
   /**
    * 发送文件消息
    * @param file
    * @param accessToken
    */
-  public static async sendFileMessage(file: QyFileMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(file), accessToken)
+  public static async sendFileMessage(apiConfig: ApiConfig, file: QyFileMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(file), accessToken)
   }
 
   /**
@@ -100,8 +100,8 @@ export class QySendMsgApi {
    * @param textCard
    * @param accessToken
    */
-  public static async sendTextCardMessage(textCard: QyTextCardMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(textCard), accessToken)
+  public static async sendTextCardMessage(apiConfig: ApiConfig, textCard: QyTextCardMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(textCard), accessToken)
   }
 
   /**
@@ -109,8 +109,8 @@ export class QySendMsgApi {
    * @param news
    * @param accessToken
    */
-  public static async sendNewsMessage(news: QyNewsMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(news), accessToken)
+  public static async sendNewsMessage(apiConfig: ApiConfig, news: QyNewsMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(news), accessToken)
   }
 
   /**
@@ -118,8 +118,8 @@ export class QySendMsgApi {
    * @param mpnews
    * @param accessToken
    */
-  public static async sendMpNewsMessage(mpnews: QyMpNewsMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(mpnews), accessToken)
+  public static async sendMpNewsMessage(apiConfig: ApiConfig, mpnews: QyMpNewsMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(mpnews), accessToken)
   }
 
   /**
@@ -127,8 +127,8 @@ export class QySendMsgApi {
    * @param markdown
    * @param accessToken
    */
-  public static async sendMarkDownMessage(markdown: QyMarkDownMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(markdown), accessToken)
+  public static async sendMarkDownMessage(apiConfig: ApiConfig, markdown: QyMarkDownMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(markdown), accessToken)
   }
 
   /**
@@ -136,16 +136,16 @@ export class QySendMsgApi {
    * @param miniprogramNotice
    * @param accessToken
    */
-  public static async sendMiniprogramNoticeMessage(miniprogramNotice: QyMiniProgramNoticeMsg, accessToken?: AccessToken) {
-    return this.sendMessage(JSON.stringify(miniprogramNotice), accessToken)
+  public static async sendMiniprogramNoticeMessage(apiConfig: ApiConfig, miniprogramNotice: QyMiniProgramNoticeMsg, accessToken?: AccessToken) {
+    return this.sendMessage(apiConfig, JSON.stringify(miniprogramNotice), accessToken)
   }
 
   /**
    * 任务卡片消息
    * @param taskCard
    */
-  public static async sendTaskCardMessage(taskCard: QyTaskCardMsg) {
-    return this.sendMessage(JSON.stringify(taskCard))
+  public static async sendTaskCardMessage(apiConfig: ApiConfig, taskCard: QyTaskCardMsg) {
+    return this.sendMessage(apiConfig, JSON.stringify(taskCard))
   }
 }
 

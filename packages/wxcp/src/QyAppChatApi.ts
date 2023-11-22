@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 import { QyTextMsg, QyImageMsg, QyVoiceMsg, QyVideoMsg, QyFileMsg, QyTextCardMsg, QyNewsMsg, QyMpNewsMsg, QyMarkDownMsg } from '.'
 /**
  * @author Javen
@@ -16,8 +16,8 @@ export class QyAppChatApi {
    * @param name 群聊名，最多50个utf8字符，超过将截断
    * @param chatId 群聊的唯一标志，不能与已有的群重复；字符串类型，最长32个字符。只允许字符0-9及字母a-zA-Z。如果不填，系统会随机生成群id
    */
-  public static async create(userList: Array<string>, owner?: string, name?: string, chatId?: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async create(apiConfig: ApiConfig, userList: Array<string>, owner?: string, name?: string, chatId?: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.createUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -40,8 +40,8 @@ export class QyAppChatApi {
    * @param owner 新群主的id
    * @param name 新的群聊名
    */
-  public static async update(chatId: string, addUserList?: Array<string>, delUserList?: Array<string>, owner?: string, name?: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async update(apiConfig: ApiConfig, chatId: string, addUserList?: Array<string>, delUserList?: Array<string>, owner?: string, name?: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.updateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -61,8 +61,8 @@ export class QyAppChatApi {
    * 获取群聊会话
    * @param chatId 群聊id
    */
-  public static async get(chatId: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async get(apiConfig: ApiConfig, chatId: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getUrl, accessToken.getAccessToken, chatId)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
@@ -73,8 +73,8 @@ export class QyAppChatApi {
    * 应用推送消息
    * @param jsonData 请求数据
    */
-  public static async send(jsonData: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async send(apiConfig: ApiConfig, jsonData: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.sendUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonData)
   }
@@ -84,8 +84,8 @@ export class QyAppChatApi {
    * 互联企业消息推送
    * @param jsonData 请求数据
    */
-  public static async sendLinkedCorpMsg(jsonData: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async sendLinkedCorpMsg(apiConfig: ApiConfig, jsonData: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.sendLinkedCorpUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonData)
   }
@@ -94,70 +94,70 @@ export class QyAppChatApi {
    * 发送文本消息
    * @param {QyTextMsg} text
    */
-  public static async sendTextMessage(text: QyTextMsg) {
-    return this.send(JSON.stringify(text))
+  public static async sendTextMessage(apiConfig: ApiConfig, text: QyTextMsg) {
+    return this.send(apiConfig, JSON.stringify(text))
   }
 
   /**
    * 发送图片消息
    * @param {QyImageMsg} image
    */
-  public static async sendImageMessage(image: QyImageMsg) {
-    return this.send(JSON.stringify(image))
+  public static async sendImageMessage(apiConfig: ApiConfig, image: QyImageMsg) {
+    return this.send(apiConfig, JSON.stringify(image))
   }
 
   /**
    * 发送语音消息
    * @param voice
    */
-  public static async sendVoiceMessage(voice: QyVoiceMsg) {
-    return this.send(JSON.stringify(voice))
+  public static async sendVoiceMessage(apiConfig: ApiConfig, voice: QyVoiceMsg) {
+    return this.send(apiConfig, JSON.stringify(voice))
   }
 
   /**
    * 发送视频消息
    * @param video
    */
-  public static async sendVideoMessage(video: QyVideoMsg) {
-    return this.send(JSON.stringify(video))
+  public static async sendVideoMessage(apiConfig: ApiConfig, video: QyVideoMsg) {
+    return this.send(apiConfig, JSON.stringify(video))
   }
   /**
    * 发送文件消息
    * @param file
    */
-  public static async sendFileMessage(file: QyFileMsg) {
-    return this.send(JSON.stringify(file))
+  public static async sendFileMessage(apiConfig: ApiConfig, file: QyFileMsg) {
+    return this.send(apiConfig, JSON.stringify(file))
   }
 
   /**
    * 文本卡片消息
    * @param textCard
    */
-  public static async sendTextCardMessage(textCard: QyTextCardMsg) {
-    return this.send(JSON.stringify(textCard))
+  public static async sendTextCardMessage(apiConfig: ApiConfig, textCard: QyTextCardMsg) {
+    return this.send(apiConfig, JSON.stringify(textCard))
   }
 
   /**
    * 图文消息
    * @param news
    */
-  public static async sendNewsMessage(news: QyNewsMsg) {
-    return this.send(JSON.stringify(news))
+  public static async sendNewsMessage(apiConfig: ApiConfig, news: QyNewsMsg) {
+    return this.send(apiConfig, JSON.stringify(news))
   }
 
   /**
    * 图文消息
    * @param mpnews
    */
-  public static async sendMpNewsMessage(mpnews: QyMpNewsMsg) {
-    return this.send(JSON.stringify(mpnews))
+  public static async sendMpNewsMessage(apiConfig: ApiConfig, mpnews: QyMpNewsMsg) {
+    return this.send(apiConfig, JSON.stringify(mpnews))
   }
 
   /**
    * markdown 消息
    * @param markdown
    */
-  public static async sendMarkDownMessage(markdown: QyMarkDownMsg) {
-    return this.send(JSON.stringify(markdown))
+  public static async sendMarkDownMessage(apiConfig: ApiConfig, markdown: QyMarkDownMsg) {
+    return this.send(apiConfig, JSON.stringify(markdown))
   }
 }

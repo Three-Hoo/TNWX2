@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -17,8 +17,8 @@ export class QyOAApi {
    * @param description 日历描述。0 ~ 512 字符
    * @param shares 日历共享成员列表。最多2000人
    */
-  public static async addCalendar(organizer: string, summary: string, color: string, description?: string, shares?: Array<Attendees>) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async addCalendar(apiConfig: ApiConfig, organizer: string, summary: string, color: string, description?: string, shares?: Array<Attendees>) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.addCalendarUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -44,8 +44,8 @@ export class QyOAApi {
    * @param description 日历描述。0 ~ 512 字符
    * @param shares 日历共享成员列表。最多2000人
    */
-  public static async updateCalendar(calId: string, summary: string, color: string, description?: string, shares?: Array<Attendees>) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async updateCalendar(apiConfig: ApiConfig, calId: string, summary: string, color: string, description?: string, shares?: Array<Attendees>) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.updateCalendarUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -67,8 +67,8 @@ export class QyOAApi {
    * 获取日历
    * @param calIdList 日历ID列表。一次最多可获取1000条
    */
-  public static async getCalendar(calIdList: Array<string>) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getCalendar(apiConfig: ApiConfig, calIdList: Array<string>) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getCalendarUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -84,8 +84,8 @@ export class QyOAApi {
    * 删除日历
    * @param calId 日历ID
    */
-  public static async delCalendar(calId: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async delCalendar(apiConfig: ApiConfig, calId: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.delCalendarUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -110,6 +110,7 @@ export class QyOAApi {
    * @param calId 日程所属日历ID
    */
   public static async addSchedule(
+    apiConfig: ApiConfig,
     organizer: string,
     startTime: number,
     endTime: number,
@@ -120,7 +121,7 @@ export class QyOAApi {
     location?: string,
     calId?: string
   ) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.addScheduleUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -156,6 +157,7 @@ export class QyOAApi {
    * @param calId 日程所属日历ID
    */
   public static async updateSchedule(
+    apiConfig: ApiConfig,
     organizer: string,
     scheduleId: string,
     startTime: number,
@@ -167,7 +169,7 @@ export class QyOAApi {
     location?: string,
     calId?: string
   ) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.updateScheduleUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -194,8 +196,8 @@ export class QyOAApi {
    * 获取日程
    * @param scheduleIdList 日程ID列表。一次最多拉取1000条
    */
-  public static async getSchedule(scheduleIdList: Array<string>) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getSchedule(apiConfig: ApiConfig, scheduleIdList: Array<string>) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getScheduleUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -211,8 +213,8 @@ export class QyOAApi {
    * 删除日程
    * @param scheduleId 日程ID
    */
-  public static async delSchedule(scheduleId: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async delSchedule(apiConfig: ApiConfig, scheduleId: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.delScheduleUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -230,8 +232,8 @@ export class QyOAApi {
    * @param offset 分页，偏移量, 默认为0
    * @param limit 分页，预期请求的数据量，默认为500，取值范围 1 ~ 1000
    */
-  public static async getScheduleByCalendar(calId: string, offset = 0, limit = 500) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getScheduleByCalendar(apiConfig: ApiConfig, calId: string, offset = 0, limit = 500) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getScheduleByCalendarUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -252,8 +254,8 @@ export class QyOAApi {
    * @param offset 分页查询的偏移量
    * @param limit 分页查询的每页大小,默认为100条，如该参数大于100则按100处理
    */
-  public static async getDialRecord(startTime: number, endTime: number, offset = 0, limit: 100) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getDialRecord(apiConfig: ApiConfig, startTime: number, endTime: number, offset = 0, limit: 100) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getDialRecordUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -275,8 +277,8 @@ export class QyOAApi {
    * @param endTime 获取打卡记录的结束时间。Unix时间戳
    * @param userIdList 需要获取打卡记录的用户列表
    */
-  public static async getCheckInData(checkInType: number, startTime: number, endTime: number, userIdList: Array<string>) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getCheckInData(apiConfig: ApiConfig, checkInType: number, startTime: number, endTime: number, userIdList: Array<string>) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getCheckInDataUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -296,8 +298,8 @@ export class QyOAApi {
    * @param datetime 需要获取规则的日期当天0点的Unix时间戳
    * @param userIdList 需要获取打卡规则的用户列表
    */
-  public static async getCheckInoption(datetime: number, userIdList: Array<string>) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getCheckInoption(apiConfig: ApiConfig, datetime: number, userIdList: Array<string>) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getCheckInoptionUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -314,8 +316,8 @@ export class QyOAApi {
    * 获取审批模板详情
    * @param templateId 模板的唯一标识id
    */
-  public static async getTemplateDetail(templateId: string) {
-    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken()
+  public static async getTemplateDetail(apiConfig: ApiConfig, templateId: string) {
+    let accessToken: AccessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getTemplateDetailUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

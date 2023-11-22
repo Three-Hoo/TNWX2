@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 
 /**
  * @author Javen
@@ -15,9 +15,9 @@ export class ShortUrlApi {
    * @param json
    * @param accessToken
    */
-  public static async getShorturl(json: string, accessToken?: AccessToken) {
+  public static async getShorturl(apiConfig: ApiConfig, json: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.apiUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, json)
@@ -28,8 +28,9 @@ export class ShortUrlApi {
    * @param longUrl
    * @param accessToken
    */
-  public static async longToShort(longUrl: string, accessToken?: AccessToken) {
+  public static async longToShort(apiConfig: ApiConfig, longUrl: string, accessToken?: AccessToken) {
     return this.getShorturl(
+      apiConfig,
       JSON.stringify({
         action: 'long2short',
         long_url: longUrl

@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -15,9 +15,9 @@ export class ShakeAroundUserApi {
    * @param needPoi 是否需要返回门店poi_id
    * @param accessToken
    */
-  public static async getShakeInfo(ticket: string, needPoi: boolean = false, accessToken?: AccessToken) {
+  public static async getShakeInfo(apiConfig: ApiConfig, ticket: string, needPoi: boolean = false, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getShakeInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

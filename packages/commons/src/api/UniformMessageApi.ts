@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
+import { AccessTokenApi, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 /**
  * @author Javen
@@ -15,8 +15,8 @@ export class UniformMessageApi {
    * @param weappTemplateMsg 小程序模板消息相关的信息
    * @param mpTemplateMsg 公众号模板消息相关的信息
    */
-  public static async sendUniformMessage(touser: string, mpTemplateMsg: object, weappTemplateMsg?: object) {
-    let accessToken = await AccessTokenApi.getAccessToken()
+  public static async sendUniformMessage(apiConfig: ApiConfig, touser: string, mpTemplateMsg: object, weappTemplateMsg?: object) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.sendUniformMessageUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

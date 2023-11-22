@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -33,9 +33,9 @@ export class DatacubeApi {
    * @param endDate 获取数据的结束日期
    * @param accessToken
    */
-  public static async getUserSummary(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUserSummary(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserSummaryUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -46,9 +46,9 @@ export class DatacubeApi {
    * @param endDate 获取数据的结束日期
    * @param accessToken
    */
-  public static async getUserCumulate(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUserCumulate(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserCumulateUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -60,9 +60,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getArticleSummary(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getArticleSummary(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getArticleSummaryUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -74,9 +74,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getArticleTotal(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getArticleTotal(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getArticleTotalUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -88,9 +88,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUserRead(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUserRead(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserReadUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -102,9 +102,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUserReadHour(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUserReadHour(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserReadHourUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -116,9 +116,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUserShare(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUserShare(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserShareUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -130,9 +130,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUserShareHour(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUserShareHour(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserShareHourUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -153,9 +153,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUpStreamMsg(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUpStreamMsg(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUpStreamMsgUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -167,9 +167,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUpStreamMsgHour(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUpStreamMsgHour(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUpStreamMsgHourUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -181,9 +181,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUpStreamMsgWeekMsg(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUpStreamMsgWeekMsg(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUpStreamMsgWeekMsgUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -195,9 +195,9 @@ export class DatacubeApi {
    * @param endDate
    * @param accessToken
    */
-  public static async getUpStreamMsgMonth(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUpStreamMsgMonth(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUpStreamMsgMonthUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -208,9 +208,9 @@ export class DatacubeApi {
    * @param beginDate
    * @param endDate
    */
-  public static async getUpStreamMsgDist(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUpStreamMsgDist(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUpStreamMsgDistUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -221,9 +221,9 @@ export class DatacubeApi {
    * @param beginDate
    * @param endDate
    */
-  public static async getUpStreamMsgDistWeek(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUpStreamMsgDistWeek(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUpStreamMsgDistWeekUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -233,9 +233,9 @@ export class DatacubeApi {
    * @param beginDate
    * @param endDate
    */
-  public static async getUpStreamMsgDistMonth(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getUpStreamMsgDistMonth(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUpStreamMsgDistMonthUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -246,9 +246,9 @@ export class DatacubeApi {
    * @param beginDate
    * @param endDate
    */
-  public static async getInterFaceSummary(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getInterFaceSummary(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getInterFaceSummaryUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)
@@ -259,9 +259,9 @@ export class DatacubeApi {
    * @param beginDate
    * @param endDate
    */
-  public static async getInterFaceSummaryHour(beginDate: string, endDate: string, accessToken?: AccessToken) {
+  public static async getInterFaceSummaryHour(apiConfig: ApiConfig, beginDate: string, endDate: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getInterFaceSummaryHourUrl, accessToken.getAccessToken)
     return this.getData(url, beginDate, endDate)

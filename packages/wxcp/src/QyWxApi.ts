@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -16,9 +16,9 @@ export class QyWxApi {
    * @param clickedKey 设置指定的按钮为选择状态，需要与发送消息时指定的btn:key一致
    * @param accessToken AccessToken
    */
-  public static async updateTaskCard(userIds: string, agentId: string, taskId: string, clickedKey: string, accessToken?: AccessToken) {
+  public static async updateTaskCard(apiConfig: ApiConfig, userIds: string, agentId: string, taskId: string, clickedKey: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateTaskCardUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -37,9 +37,9 @@ export class QyWxApi {
   /**
    * 获取企业微信API域名IP段
    */
-  public static async getApiDomainIp(accessToken?: AccessToken) {
+  public static async getApiDomainIp(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getApiDomainIpUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)

@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, ApiConfig, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -13,9 +13,9 @@ export class QyExContact {
    * 获取配置了客户联系功能的成员列表
    * @param accessToken {AccessToken}
    */
-  public static async getFollowUserList(accessToken?: AccessToken) {
+  public static async getFollowUserList(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getFollowUserListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -36,6 +36,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async addContactWay(
+    apiConfig: ApiConfig,
     type: number,
     scene: number,
     style?: number,
@@ -47,7 +48,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addContactWayUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -79,6 +80,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async updateContactWay(
+    apiConfig: ApiConfig,
     configId: string,
     style?: number,
     remark?: string,
@@ -89,7 +91,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateContactWayUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -113,9 +115,9 @@ export class QyExContact {
    * @param configId 联系方式的配置id
    * @param accessToken {AccessToken}
    */
-  public static async getContactWay(configId: string, accessToken?: AccessToken) {
+  public static async getContactWay(apiConfig: ApiConfig, configId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getContactWayUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -133,9 +135,9 @@ export class QyExContact {
    * @param configId 联系方式的配置id
    * @param accessToken {AccessToken}
    */
-  public static async delContactWay(configId: string, accessToken?: AccessToken) {
+  public static async delContactWay(apiConfig: ApiConfig, configId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delContactWayUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -153,9 +155,9 @@ export class QyExContact {
    * @param userId 企业成员的userid
    * @param accessToken {AccessToken}
    */
-  public static async getUserList(userId: string, accessToken?: AccessToken) {
+  public static async getUserList(apiConfig: ApiConfig, userId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserListUrl, accessToken.getAccessToken, userId)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -168,9 +170,9 @@ export class QyExContact {
    * @param externalUserId 外部联系人的userid
    * @param accessToken {AccessToken}
    */
-  public static async getUserInfo(externalUserId: string, accessToken?: AccessToken) {
+  public static async getUserInfo(apiConfig: ApiConfig, externalUserId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserInfoUrl, accessToken.getAccessToken, externalUserId)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -190,6 +192,7 @@ export class QyExContact {
    * @param accessToken
    */
   public static async updateRemark(
+    apiConfig: ApiConfig,
     userId: string,
     externalUserId: string,
     remark?: string,
@@ -200,7 +203,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateRemarkUrl, accessToken.getAccessToken, externalUserId)
     return HttpKit.getHttpDelegate.httpPost(
@@ -224,9 +227,9 @@ export class QyExContact {
    * @param tagId
    * @param accessToken
    */
-  public static async getCorpTagList(tagId?: Array<string>, accessToken?: AccessToken) {
+  public static async getCorpTagList(apiConfig: ApiConfig, tagId?: Array<string>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getCorpTagListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -247,9 +250,16 @@ export class QyExContact {
    * @param tag 标签列表
    * @param accessToken {AccessToken}
    */
-  public static async addCorpTag(groupId?: string, groupName?: string, order?: number, tag?: Array<{ name: string; order?: number }>, accessToken?: AccessToken) {
+  public static async addCorpTag(
+    apiConfig: ApiConfig,
+    groupId?: string,
+    groupName?: string,
+    order?: number,
+    tag?: Array<{ name: string; order?: number }>,
+    accessToken?: AccessToken
+  ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addCorpTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -272,9 +282,9 @@ export class QyExContact {
    * @param order 标签/标签组的次序值
    * @param accessToken {AccessToken}
    */
-  public static async editCorpTag(id: string, name?: string, order?: number, accessToken?: AccessToken) {
+  public static async editCorpTag(apiConfig: ApiConfig, id: string, name?: string, order?: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.editCorpTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -295,9 +305,9 @@ export class QyExContact {
    * @param groupId 标签组的id列表
    * @param accessToken {AccessToken}
    */
-  public static async delCorpTag(tagId: Array<string>, groupId?: Array<string>, accessToken?: AccessToken) {
+  public static async delCorpTag(apiConfig: ApiConfig, tagId: Array<string>, groupId?: Array<string>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delCorpTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -319,9 +329,9 @@ export class QyExContact {
    * @param removeTag 要移除的标签列表
    * @param accessToken
    */
-  public static async markTag(userId: string, externalUserId: string, addTag?: Array<string>, removeTag?: Array<string>, accessToken?: AccessToken) {
+  public static async markTag(apiConfig: ApiConfig, userId: string, externalUserId: string, addTag?: Array<string>, removeTag?: Array<string>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.markTagUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -346,6 +356,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async getGroupChatList(
+    apiConfig: ApiConfig,
     offset: number,
     limit: number,
     statusFilter = 0,
@@ -353,7 +364,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getGroupChatListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -374,9 +385,9 @@ export class QyExContact {
    * @param chatId 客户群ID
    * @param accessToken {AccessToken}
    */
-  public static async getGroupChat(chatId: string, accessToken?: AccessToken) {
+  public static async getGroupChat(apiConfig: ApiConfig, chatId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getGroupChatUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -400,6 +411,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async addMsgTemplate(
+    apiConfig: ApiConfig,
     externalUserId?: Array<string>,
     sender?: string,
     text?: {
@@ -423,7 +435,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addMsgTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -446,9 +458,9 @@ export class QyExContact {
    * @param msgId 群发消息的id
    * @param accessToken {AccessToken}
    */
-  public static async getGroupMsgResult(msgId: string, accessToken?: AccessToken) {
+  public static async getGroupMsgResult(apiConfig: ApiConfig, msgId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getGroupMsgResultUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -471,6 +483,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async sendWelcomeMsg(
+    apiConfig: ApiConfig,
     welcomeCode: string,
     text?: {
       content: string
@@ -493,7 +506,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.sendWelcomeMsgUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -519,6 +532,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async addGroupWelcomeTemplate(
+    apiConfig: ApiConfig,
     text?: {
       content: string
     },
@@ -540,7 +554,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addGroupWelcomeTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -566,6 +580,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async editGroupWelcomeTemplate(
+    apiConfig: ApiConfig,
     templateId: string,
     text?: {
       content: string
@@ -588,7 +603,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.editGroupWelcomeTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -610,9 +625,9 @@ export class QyExContact {
    * @param templateId 群欢迎语的素材id
    * @param accessToken {AccessToken}
    */
-  public static async getGroupWelcomeTemplate(templateId: string, accessToken?: AccessToken) {
+  public static async getGroupWelcomeTemplate(apiConfig: ApiConfig, templateId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getGroupWelcomeTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -630,9 +645,9 @@ export class QyExContact {
    * @param templateId 群欢迎语的素材id
    * @param accessToken {AccessToken}
    */
-  public static async delGroupWelcomeTemplate(templateId: string, accessToken?: AccessToken) {
+  public static async delGroupWelcomeTemplate(apiConfig: ApiConfig, templateId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delGroupWelcomeTemplateUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -651,9 +666,9 @@ export class QyExContact {
    * @param pageSize
    * @param accessToken {AccessToken}
    */
-  public static async getUnAssignedList(pageId: number, pageSize: number, accessToken?: AccessToken) {
+  public static async getUnAssignedList(apiConfig: ApiConfig, pageId: number, pageSize: number, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUnAssignedListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -674,9 +689,9 @@ export class QyExContact {
    * @param takeOverUserId 接替成员的userid
    * @param accessToken {AccessToken}
    */
-  public static async transferContact(externalUserId: string, handOverUserId: string, takeOverUserId: string, accessToken?: AccessToken) {
+  public static async transferContact(apiConfig: ApiConfig, externalUserId: string, handOverUserId: string, takeOverUserId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.transferContactUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -697,9 +712,9 @@ export class QyExContact {
    * @param newOwner 新群主ID
    * @param accessToken {AccessToken}
    */
-  public static async transferGroupChat(chatIdList: Array<string>, newOwner: string, accessToken?: AccessToken) {
+  public static async transferGroupChat(apiConfig: ApiConfig, chatIdList: Array<string>, newOwner: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.transferGroupChatUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -721,9 +736,9 @@ export class QyExContact {
    * @param partyId 部门ID列表
    * @param accessToken {AccessToken}
    */
-  public static async getUserBehaviorData(startTime: number, endTime: number, userId?: Array<string>, partyId?: Array<number>, accessToken?: AccessToken) {
+  public static async getUserBehaviorData(apiConfig: ApiConfig, startTime: number, endTime: number, userId?: Array<string>, partyId?: Array<number>, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUserBehaviorDataUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -750,6 +765,7 @@ export class QyExContact {
    * @param accessToken {AccessToken}
    */
   public static async getGroupChatStatistic(
+    apiConfig: ApiConfig,
     dayBeginTime: number,
     ownerFilter?: {
       userid_list?: Array<string>
@@ -762,7 +778,7 @@ export class QyExContact {
     accessToken?: AccessToken
   ) {
     if (!accessToken) {
-      accessToken = await QyAccessTokenApi.getAccessToken()
+      accessToken = await QyAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getGroupChatStatisticUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

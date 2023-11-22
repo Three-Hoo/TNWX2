@@ -33,7 +33,7 @@ export class JsTicketApi {
     }
     // 通过接口获取
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getTicketUrl, accessToken.getAccessToken, type)
     let data = await HttpKit.getHttpDelegate.httpGet(url)

@@ -1,6 +1,6 @@
 import * as util from 'util'
 import { HttpKit } from '@tnwx2/kits'
-import { AccessToken, OpenCpAccessTokenApi, AccessTokenType, OpenComponentAccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, OpenCpAccessTokenApi, AccessTokenType, OpenComponentAccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -55,8 +55,8 @@ export class OpenMpApi {
    * 获取预授权码
    * @param appId 第三方平台 appid
    */
-  public static async getPreAuthCode(appId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async getPreAuthCode(apiConfig: ApiConfig, appId: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getPreAuthCodeUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -73,8 +73,8 @@ export class OpenMpApi {
    * @param appId               第三方平台 appid
    * @param authorizationCode   授权码
    */
-  public static async queryAuth(appId: string, authorizationCode: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async queryAuth(apiConfig: ApiConfig, appId: string, authorizationCode: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.queryAuthUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -92,8 +92,8 @@ export class OpenMpApi {
    * @param appId           第三方平台 appid
    * @param authorizerAppId 授权方 appid
    */
-  public static async getAuthorizerInfo(appId: string, authorizerAppId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async getAuthorizerInfo(apiConfig: ApiConfig, appId: string, authorizerAppId: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getAuthorizerInfoUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -112,8 +112,8 @@ export class OpenMpApi {
    * @param authorizerAppId 授权方 appid
    * @param optionName      选项名称
    */
-  public static async getAuthorizerOption(appId: string, authorizerAppId: string, optionName: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async getAuthorizerOption(apiConfig: ApiConfig, appId: string, authorizerAppId: string, optionName: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getAuthorizerOptionUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -134,8 +134,8 @@ export class OpenMpApi {
    * @param optionName      选项名称
    * @param optionValue     选项值
    */
-  public static async setAuthorizerOption(appId: string, authorizerAppId: string, optionName: string, optionValue: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async setAuthorizerOption(apiConfig: ApiConfig, appId: string, authorizerAppId: string, optionName: string, optionValue: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.setAuthorizerOptionUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -156,8 +156,8 @@ export class OpenMpApi {
    * @param offset  偏移位置/起始位置
    * @param count   拉取数量，最大为 500
    */
-  public static async getAuthorizerList(appId: string, offset: number, count: number) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async getAuthorizerList(apiConfig: ApiConfig, appId: string, offset: number, count: number) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getAuthorizerListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -175,8 +175,8 @@ export class OpenMpApi {
    * 创建开放平台帐号并绑定公众号/小程序
    * @param appId 授权公众号/小程序的 appid
    */
-  public static async create(appId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async create(apiConfig: ApiConfig, appId: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.createUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -193,8 +193,8 @@ export class OpenMpApi {
    * @param appId 授权公众号/小程序的 appid
    * @param openAppId 开放平台帐号 appid
    */
-  public static async bind(appId: string, openAppId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async bind(apiConfig: ApiConfig, appId: string, openAppId: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.bindUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -212,8 +212,8 @@ export class OpenMpApi {
    * @param appId 授权公众号/小程序的 appid
    * @param openAppId 开放平台帐号 appid
    */
-  public static async unBind(appId: string, openAppId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async unBind(apiConfig: ApiConfig, appId: string, openAppId: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.unBindUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -230,8 +230,8 @@ export class OpenMpApi {
    * 将公众号/小程序从开放平台帐号下解绑
    * @param appId 授权公众号/小程序的 appid
    */
-  public static async get(appId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async get(apiConfig: ApiConfig, appId: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.getUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -247,9 +247,9 @@ export class OpenMpApi {
    * 对公众号的所有 API 调用次数进行清零
    * @param appId 公众号的 appId
    */
-  public static async clearQuota(appId: string, accessToken: AccessToken) {
+  public static async clearQuota(apiConfig: ApiConfig, appId: string, accessToken: AccessToken) {
     if (!accessToken) {
-      accessToken = await OpenComponentAccessTokenApi.getAccessToken()
+      accessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.clearQuotaUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -266,8 +266,8 @@ export class OpenMpApi {
    * 第三方平台 API 调用次数清零
    * @param appId 第三方平台 appId
    */
-  public static async clearComponentQuota(appId: string) {
-    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+  public static async clearComponentQuota(apiConfig: ApiConfig, appId: string) {
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken(apiConfig)
     let url = util.format(this.clearComponentQuotaUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,

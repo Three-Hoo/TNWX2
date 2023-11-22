@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi, ApiConfigKit } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig, ApiConfigKit } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 import { Article, MenuMsg } from '@tnwx2/commons'
 
@@ -26,9 +26,9 @@ export class CustomServiceApi {
    * @param inviteWx 接收绑定邀请的客服微信号
    * @param accessToken
    */
-  public static async inviteWorker(kf_account: string, inviteWx: string, accessToken?: AccessToken) {
+  public static async inviteWorker(apiConfig: ApiConfig, kf_account: string, inviteWx: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.inviteUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -43,9 +43,9 @@ export class CustomServiceApi {
    * 获取在线客服
    * @param accessToken
    */
-  public static async getOnlineKfList(accessToken?: AccessToken) {
+  public static async getOnlineKfList(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getOnlineUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -59,9 +59,9 @@ export class CustomServiceApi {
    * @param password 客服账号登录密码，格式为密码明文的32位加密MD5值。该密码仅用于在公众平台官网的多客服功能中使用，若不使用多客服功能，则不必设置密码
    * @param accessToken
    */
-  public static async addKfAccount(kf_account: string, nickname: string, password: string, accessToken?: AccessToken) {
+  public static async addKfAccount(apiConfig: ApiConfig, kf_account: string, nickname: string, password: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.addKfAccountUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -82,9 +82,9 @@ export class CustomServiceApi {
    * @param password
    * @param accessToken
    */
-  public static async updateKfAccount(kf_account: string, nickname: string, password: string, accessToken?: AccessToken) {
+  public static async updateKfAccount(apiConfig: ApiConfig, kf_account: string, nickname: string, password: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.updateKfAccountUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -103,9 +103,9 @@ export class CustomServiceApi {
    * @param kf_account
    * @param accessToken
    */
-  public static async delKfAccount(kf_account: string, accessToken?: AccessToken) {
+  public static async delKfAccount(apiConfig: ApiConfig, kf_account: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.delKfAccountUrl, accessToken.getAccessToken, kf_account)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -118,9 +118,9 @@ export class CustomServiceApi {
    * @param filePath 头像图片文件必须是jpg格式，推荐使用640*640大小的图片以达到最佳效果
    * @param accessToken
    */
-  public static async uploadKfAccountHeadImg(kf_account: string, filePath: string, accessToken?: AccessToken) {
+  public static async uploadKfAccountHeadImg(apiConfig: ApiConfig, kf_account: string, filePath: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.uploadKfHeadImgUrl, accessToken.getAccessToken, kf_account)
     return HttpKit.getHttpDelegate.upload(url, filePath)
@@ -130,9 +130,9 @@ export class CustomServiceApi {
    * 获取所有客服账号
    * @param accessToken
    */
-  public static async getKfList(accessToken?: AccessToken) {
+  public static async getKfList(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getKfListUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -145,9 +145,9 @@ export class CustomServiceApi {
    * @param kf_account 以某个客服帐号来发消息
    * @param accessToken
    */
-  public static async sendMsg(msgObj: any, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendMsg(apiConfig: ApiConfig, msgObj: any, kf_account?: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.customMessageUrl, accessToken.getAccessToken)
     let json: string = ''
@@ -170,8 +170,9 @@ export class CustomServiceApi {
    * @param text
    * @param accessToken
    */
-  public static async sendText(openId: string, text: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendText(apiConfig: ApiConfig, openId: string, text: string, kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'text',
@@ -191,8 +192,9 @@ export class CustomServiceApi {
    * @param text
    * @param accessToken
    */
-  public static async sendImage(openId: string, media_id: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendImage(apiConfig: ApiConfig, openId: string, media_id: string, kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'image',
@@ -212,8 +214,9 @@ export class CustomServiceApi {
    * @param media_id
    * @param accessToken
    */
-  public static async sendVoice(openId: string, media_id: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendVoice(apiConfig: ApiConfig, openId: string, media_id: string, kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'voice',
@@ -235,8 +238,9 @@ export class CustomServiceApi {
    * @param description
    * @param accessToken
    */
-  public static async sendVideo(openId: string, media_id: string, title: string, description: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendVideo(apiConfig: ApiConfig, openId: string, media_id: string, title: string, description: string, kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'video',
@@ -263,6 +267,7 @@ export class CustomServiceApi {
    * @param accessToken
    */
   public static async sendMusic(
+    apiConfig: ApiConfig,
     openId: string,
     title: string,
     description: string,
@@ -273,6 +278,7 @@ export class CustomServiceApi {
     accessToken?: AccessToken
   ) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'music',
@@ -296,8 +302,9 @@ export class CustomServiceApi {
    * @param articles
    * @param accessToken
    */
-  public static async sendNews(openId: string, articles: Article[], kf_account?: string, accessToken?: AccessToken) {
+  public static async sendNews(apiConfig: ApiConfig, openId: string, articles: Article[], kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'news',
@@ -317,8 +324,9 @@ export class CustomServiceApi {
    * @param media_id
    * @param accessToken
    */
-  public static async sendMpNews(openId: string, media_id: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendMpNews(apiConfig: ApiConfig, openId: string, media_id: string, kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'mpnews',
@@ -339,8 +347,9 @@ export class CustomServiceApi {
    * @param tail_content
    * @param accessToken
    */
-  public static async sendMenu(openId: string, head_content: string, list: MenuMsg[], tail_content: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendMenu(apiConfig: ApiConfig, openId: string, head_content: string, list: MenuMsg[], tail_content: string, kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'msgmenu',
@@ -361,8 +370,9 @@ export class CustomServiceApi {
    * @param card_id
    * @param accessToken
    */
-  public static async sendCoupon(openId: string, card_id: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendCoupon(apiConfig: ApiConfig, openId: string, card_id: string, kf_account?: string, accessToken?: AccessToken) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'wxcard',
@@ -384,8 +394,18 @@ export class CustomServiceApi {
    * @param thumb_media_id 缩略图/小程序卡片图片的媒体ID，小程序卡片图片建议大小为520*416
    * @param accessToken
    */
-  public static async sendMiniProgramPage(openId: string, title: string, appid: string, pagepath: string, thumb_media_id: string, kf_account?: string, accessToken?: AccessToken) {
+  public static async sendMiniProgramPage(
+    apiConfig: ApiConfig,
+    openId: string,
+    title: string,
+    appid: string,
+    pagepath: string,
+    thumb_media_id: string,
+    kf_account?: string,
+    accessToken?: AccessToken
+  ) {
     return this.sendMsg(
+      apiConfig,
       {
         touser: openId,
         msgtype: 'miniprogrampage',
@@ -408,9 +428,9 @@ export class CustomServiceApi {
    * @param command "Typing"：对用户下发“正在输入"状态,"CancelTyping"：取消对用户的”正在输入"状态
    * @param accessToken
    */
-  public static async sendTyping(openId: string, command: string, accessToken?: AccessToken) {
+  public static async sendTyping(apiConfig: ApiConfig, openId: string, command: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.typingUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(

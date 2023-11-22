@@ -1,5 +1,5 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 
 /**
@@ -14,9 +14,9 @@ export class MessageApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async sendAll(jsonStr: string, accessToken?: AccessToken) {
+  public static async sendAll(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.sendAllUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -28,9 +28,9 @@ export class MessageApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async send(jsonStr: string, accessToken?: AccessToken) {
+  public static async send(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.sendUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -42,9 +42,9 @@ export class MessageApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async delete(jsonStr: string, accessToken?: AccessToken) {
+  public static async delete(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.deleteUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -56,9 +56,9 @@ export class MessageApi {
    * @param jsonStr
    * @param accessToken
    */
-  public static async preview(jsonStr: string, accessToken?: AccessToken) {
+  public static async preview(apiConfig: ApiConfig, jsonStr: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.previewUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(url, jsonStr)
@@ -70,9 +70,9 @@ export class MessageApi {
    * @param msgId 群发消息后返回的消息id
    * @param accessToken
    */
-  public static async get(msgId: string, accessToken?: AccessToken) {
+  public static async get(apiConfig: ApiConfig, msgId: string, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
@@ -88,9 +88,9 @@ export class MessageApi {
    * 获取群发速度
    * @param accessToken
    */
-  public static async getSpeed(accessToken?: AccessToken) {
+  public static async getSpeed(apiConfig: ApiConfig, accessToken?: AccessToken) {
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.getSpeedUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
@@ -107,11 +107,11 @@ export class MessageApi {
    * @param speed 群发速度的级别，是一个0到4的整数，数字越大表示群发速度越慢
    * @param accessToken
    */
-  public static async setSpeed(speed: number, accessToken?: AccessToken) {
+  public static async setSpeed(apiConfig: ApiConfig, speed: number, accessToken?: AccessToken) {
     if (speed > 4) speed = 4
     if (speed < 0) speed = 0
     if (!accessToken) {
-      accessToken = await AccessTokenApi.getAccessToken()
+      accessToken = await AccessTokenApi.getAccessToken(apiConfig)
     }
     let url = util.format(this.setSpeedUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
