@@ -23,8 +23,8 @@ export class OpenAuthorizerAccessTokenApi {
    * @param componentAccessToken    开放平台令牌
    * @param authorizerRefreshToken  刷新令牌
    */
-  public static async getAccessToken(authorizerAppId: string, componentAccessToken?: string, authorizerRefreshToken?: string): Promise<AccessToken> {
-    let ac: ApiConfig = ApiConfigKit.getApiConfig
+  public static async getAccessToken(apiConfig: ApiConfig, authorizerAppId: string, componentAccessToken?: string, authorizerRefreshToken?: string): Promise<AccessToken> {
+    let ac: ApiConfig = apiConfig
     let accessToken: AccessToken | undefined = await this.getAvailableAccessToken(ac, authorizerAppId)
     if (accessToken) {
       if (ApiConfigKit.isDevMode()) {

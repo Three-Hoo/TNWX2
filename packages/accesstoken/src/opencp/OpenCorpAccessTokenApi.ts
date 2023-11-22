@@ -4,6 +4,7 @@ import { HttpKit } from '@tnwx2/kits'
 import { AccessToken, AccessTokenType } from '../AccessToken'
 import { QyApiConfigKit } from '../wxcp/QyApiConfigKit'
 import { OpenCpAccessTokenApi } from './OpenCpAccessTokenApi'
+import { ApiConfig } from '../ApiConfig'
 
 /**
  * @author Javen
@@ -19,7 +20,7 @@ export class OpenCorpAccessTokenApi {
    * @param authCorpid 授权方corpid
    * @param permanentCode 永久授权码
    */
-  public static async getAccessToken(authCorpid: string, permanentCode: string): Promise<AccessToken> {
+  public static async getAccessToken(apiConfig: ApiConfig, authCorpid: string, permanentCode: string): Promise<AccessToken> {
     let accessToken: AccessToken | undefined = await this.getAvailableAccessToken(authCorpid, permanentCode)
     if (accessToken) {
       if (QyApiConfigKit.isDevMode()) {
@@ -30,7 +31,7 @@ export class OpenCorpAccessTokenApi {
     if (QyApiConfigKit.isDevMode()) {
       console.debug('刷新 accesstoken')
     }
-    return await this.refreshAccessToken(authCorpid, permanentCode)
+    return await this.refreshAccessToken(apiConfig, authCorpid, permanentCode)
   }
 
   /**
@@ -57,8 +58,8 @@ export class OpenCorpAccessTokenApi {
    * @param authCorpid 授权方corpid
    * @param permanentCode 永久授权码
    */
-  public static async refreshAccessToken(authCorpid: string, permanentCode: string): Promise<AccessToken> {
-    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(AccessTokenType.SUITE_TOKEN)
+  public static async refreshAccessToken(apiConfig: ApiConfig, authCorpid: string, permanentCode: string): Promise<AccessToken> {
+    let accessToken: AccessToken = await OpenCpAccessTokenApi.getAccessToken(apiConfig, AccessTokenType.SUITE_TOKEN)
     let url = util.format(this.getCorpTokenUrl, accessToken.getAccessToken)
     let data = await HttpKit.getHttpDelegate.httpPost(
       url,

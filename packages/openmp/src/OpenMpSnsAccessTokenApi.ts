@@ -1,6 +1,6 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
-import { ApiConfigKit, AccessToken, OpenComponentAccessTokenApi } from '@tnwx2/accesstoken'
+import { ApiConfigKit, AccessToken, OpenComponentAccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 import { ScopeEnum, Lang } from '@tnwx2/commons'
 /**
@@ -23,8 +23,8 @@ export class OpenMpSnsAccessTokenApi {
    * @param scope       授权作用域，拥有多个作用域用逗号（,）分隔
    * @param state       重定向后会带上 state 参数，开发者可以填写任意参数值，最多 128 字节
    */
-  public static getAuthorizeUrl(appId: string, redirectUri: string, scope: ScopeEnum, state?: string): string {
-    let url = util.format(this.authorizeUrl, appId, urlencode(redirectUri), scope, ApiConfigKit.getApiConfig.getAppId)
+  public static getAuthorizeUrl(apiConfig: ApiConfig, appId: string, redirectUri: string, scope: ScopeEnum, state?: string): string {
+    let url = util.format(this.authorizeUrl, appId, urlencode(redirectUri), scope, apiConfig.getAppId)
     if (state) {
       url = url + '&state=' + state
     }
@@ -35,9 +35,9 @@ export class OpenMpSnsAccessTokenApi {
    * 通过code换取网页授权access_token
    * @param code
    */
-  public static async getSnsAccessToken(code: string, appId: string) {
+  public static async getSnsAccessToken(apiConfig: ApiConfig, code: string, appId: string) {
     let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
-    let url = util.format(this.accessTokenUrl, appId, code, ApiConfigKit.getApiConfig.getAppId, accessToken.getAccessToken)
+    let url = util.format(this.accessTokenUrl, appId, code, apiConfig.getAppId, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
 
@@ -45,9 +45,9 @@ export class OpenMpSnsAccessTokenApi {
    * 刷新access_token
    * @param refreshToken
    */
-  public static async refreshAccessToken(appId: string, refreshToken: string) {
+  public static async refreshAccessToken(apiConfig: ApiConfig, appId: string, refreshToken: string) {
     let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
-    let url = util.format(this.refreshTokenUrl, appId, ApiConfigKit.getApiConfig.getAppId, accessToken.getAccessToken, refreshToken)
+    let url = util.format(this.refreshTokenUrl, appId, apiConfig.getAppId, accessToken.getAccessToken, refreshToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
 

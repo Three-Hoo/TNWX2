@@ -5,7 +5,7 @@
  */
 
 import * as util from 'util'
-import { QyApiConfigKit, AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { QyApiConfigKit, AccessToken, QyAccessTokenApi, ApiConfig } from '@tnwx2/accesstoken'
 import { ICache } from '@tnwx2/cache'
 import { HttpKit } from '@tnwx2/kits'
 import { JsTicket } from '../entity/JsTicket'
@@ -18,9 +18,9 @@ export class QyJsTicketApi {
    * 获取api_ticket
    * @param type
    */
-  public static async getTicket(type: QyJsApiType) {
-    let appId = QyApiConfigKit.getApiConfig.getAppId
-    let corpId = QyApiConfigKit.getApiConfig.getCorpId
+  public static async getTicket(apiConfig: ApiConfig, type: QyJsApiType) {
+    let appId = apiConfig.getAppId
+    let corpId = apiConfig.getCorpId
     let key = appId
       .concat(':')
       .concat(corpId)

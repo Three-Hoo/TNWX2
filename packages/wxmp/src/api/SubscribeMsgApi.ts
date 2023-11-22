@@ -1,6 +1,6 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
-import { AccessToken, AccessTokenApi, ApiConfigKit } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig, ApiConfigKit } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 import { SubscribeMsg } from '@tnwx2/commons'
 
@@ -19,8 +19,8 @@ export class SubscribeMsgApi {
    * @param redirectUrl
    * @param reserved 可以填写a-zA-Z0-9的参数值
    */
-  public static getAuthorizeURL(scene: number, templateId: string, redirectUrl: string, reserved?: string): string {
-    let url = util.format(this.authorizeUrl, ApiConfigKit.getApiConfig.getAppId, scene, templateId, urlencode(redirectUrl))
+  public static getAuthorizeURL(apiConfig: ApiConfig, scene: number, templateId: string, redirectUrl: string, reserved?: string): string {
+    let url = util.format(this.authorizeUrl, apiConfig.getAppId, scene, templateId, urlencode(redirectUrl))
     if (reserved) {
       url = url + '&reserved=' + urlencode(reserved)
     }

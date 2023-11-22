@@ -1,4 +1,4 @@
-import { QyApiConfigKit } from '@tnwx2/accesstoken'
+import { ApiConfig, QyApiConfigKit } from '@tnwx2/accesstoken'
 import { parseString } from 'xml2js'
 import {
   CryptoKit,
@@ -81,8 +81,8 @@ export class QyWeChat {
    *  @param nonce
    *  @param echostr
    */
-  public static checkSignature(signature: string, timestamp: string, nonce: string, echostr: string): string {
-    let cryptoKit: CryptoKit = new CryptoKit(QyApiConfigKit.getApiConfig, signature, timestamp, nonce)
+  public static checkSignature(apiConfig: ApiConfig, signature: string, timestamp: string, nonce: string, echostr: string): string {
+    let cryptoKit: CryptoKit = new CryptoKit(apiConfig, signature, timestamp, nonce)
     try {
       return cryptoKit.decrypt(echostr)
     } catch (error) {
@@ -98,7 +98,7 @@ export class QyWeChat {
    *  @param timestamp
    *  @param nonce
    */
-  public static handleMsg(msgAdapter: MsgAdapter, msgXml: string, msgSignature?: string, timestamp?: string, nonce?: string): Promise<string> {
+  public static handleMsg(apiConfig: ApiConfig, msgAdapter: MsgAdapter, msgXml: string, msgSignature?: string, timestamp?: string, nonce?: string): Promise<string> {
     let cryptoKit: CryptoKit
     return new Promise(function(resolve, reject) {
       parseString(msgXml, { explicitArray: false }, async (err, result) => {
@@ -109,7 +109,7 @@ export class QyWeChat {
         }
         result = result.xml
         let isEncrypt: boolean = true
-        cryptoKit = new CryptoKit(QyApiConfigKit.getApiConfig, msgSignature, timestamp, nonce)
+        cryptoKit = new CryptoKit(apiConfig, msgSignature, timestamp, nonce)
         // 对加密数据解密
         result = cryptoKit.decryptMsg(result.Encrypt)
 

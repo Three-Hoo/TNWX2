@@ -1,6 +1,6 @@
 import * as crypto from 'crypto'
 import { parseString } from 'xml2js'
-import { ApiConfigKit, AccessToken } from '@tnwx2/accesstoken'
+import { ApiConfigKit, AccessToken, ApiConfig } from '@tnwx2/accesstoken'
 import {
   CryptoKit,
   MsgAdapter,
@@ -90,7 +90,7 @@ export class WeChat {
    *  @param timestamp
    *  @param nonce
    */
-  public static handleMsg(msgAdapter: MsgAdapter, msgXml: string, msgSignature?: string, timestamp?: string, nonce?: string): Promise<string> {
+  public static handleMsg(apiConfig: ApiConfig, msgAdapter: MsgAdapter, msgXml: string, msgSignature?: string, timestamp?: string, nonce?: string): Promise<string> {
     //实例微信消息加解密
     let cryptoKit: CryptoKit
     return new Promise(function(resolve, reject) {
@@ -103,9 +103,9 @@ export class WeChat {
         result = result.xml
         let isEncryptMessage: boolean = false
         //判断消息加解密方式
-        if (ApiConfigKit.getApiConfig.getEncryptMessage && ApiConfigKit.getApiConfig.getEncodingAesKey) {
+        if (apiConfig.getEncryptMessage && apiConfig.getEncodingAesKey) {
           isEncryptMessage = true
-          cryptoKit = new CryptoKit(ApiConfigKit.getApiConfig, msgSignature || '', timestamp || '', nonce || '')
+          cryptoKit = new CryptoKit(apiConfig, msgSignature || '', timestamp || '', nonce || '')
           //对加密数据解密
           result = cryptoKit.decryptMsg(result.Encrypt)
         }

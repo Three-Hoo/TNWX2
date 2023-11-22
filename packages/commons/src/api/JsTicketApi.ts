@@ -5,7 +5,7 @@
  */
 
 import * as util from 'util'
-import { AccessToken, AccessTokenApi, ApiConfigKit } from '@tnwx2/accesstoken'
+import { AccessToken, AccessTokenApi, ApiConfig, ApiConfigKit } from '@tnwx2/accesstoken'
 import { ICache } from '@tnwx2/cache'
 import { HttpKit } from '@tnwx2/kits'
 import { JsTicket } from '../entity/JsTicket'
@@ -18,8 +18,8 @@ export class JsTicketApi {
    * @param type
    * @param accessToken api_authorizer_token
    */
-  public static async getTicket(type: JsApiType, accessToken?: AccessToken) {
-    let appId = ApiConfigKit.getApiConfig.getAppId
+  public static async getTicket(apiConfig: ApiConfig, type: JsApiType, accessToken?: AccessToken) {
+    let appId = apiConfig.getAppId
     let key = appId + ':' + type
     // 从缓存中获取
     let cache: ICache = ApiConfigKit.getCache

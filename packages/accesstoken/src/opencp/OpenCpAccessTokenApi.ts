@@ -18,8 +18,8 @@ export class OpenCpAccessTokenApi {
    * 2、如果缓存中的已过期就调用刷新接口来获取新的 acces_token
    * @param tokenType
    */
-  public static async getAccessToken(tokenType = AccessTokenType.PROVIDER_TOKEN): Promise<AccessToken> {
-    let ac: ApiConfig = QyApiConfigKit.getApiConfig
+  public static async getAccessToken(apiConfig: ApiConfig, tokenType = AccessTokenType.PROVIDER_TOKEN): Promise<AccessToken> {
+    let ac: ApiConfig = apiConfig
     let accessToken: AccessToken | undefined = await this.getAvailableAccessToken(ac, tokenType)
     if (accessToken) {
       if (QyApiConfigKit.isDevMode()) {

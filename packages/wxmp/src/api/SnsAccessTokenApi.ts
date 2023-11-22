@@ -1,6 +1,6 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
-import { ApiConfigKit } from '@tnwx2/accesstoken'
+import { ApiConfig, ApiConfigKit } from '@tnwx2/accesstoken'
 import { HttpKit } from '@tnwx2/kits'
 import { ScopeEnum, Lang } from '@tnwx2/commons'
 
@@ -17,8 +17,8 @@ export class SnsAccessTokenApi {
    *  @param scope
    *  @param state
    */
-  public static getAuthorizeUrl(redirectUri: string, scope: ScopeEnum, state?: string): string {
-    let url = util.format(this.authorizeUrl, ApiConfigKit.getApiConfig.getAppId, urlencode(redirectUri), scope)
+  public static getAuthorizeUrl(apiConfig: ApiConfig, redirectUri: string, scope: ScopeEnum, state?: string): string {
+    let url = util.format(this.authorizeUrl, apiConfig.getAppId, urlencode(redirectUri), scope)
     if (state) {
       url = url + '&state=' + state
     }
@@ -28,16 +28,16 @@ export class SnsAccessTokenApi {
    *  通过code换取网页授权access_token
    *  @param code
    */
-  public static async getSnsAccessToken(code: string) {
-    let url = util.format(this.accessTokenUrl, ApiConfigKit.getApiConfig.getAppId, ApiConfigKit.getApiConfig.getAppScrect, code)
+  public static async getSnsAccessToken(apiConfig: ApiConfig, code: string) {
+    let url = util.format(this.accessTokenUrl, apiConfig.getAppId, apiConfig.getAppScrect, code)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
   /**
    *  刷新access_token
    *  @param refreshToken
    */
-  public static async refreshAccessToken(refreshToken: string) {
-    let url = util.format(this.refreshTokenUrl, ApiConfigKit.getApiConfig.getAppId, refreshToken)
+  public static async refreshAccessToken(apiConfig: ApiConfig, refreshToken: string) {
+    let url = util.format(this.refreshTokenUrl, apiConfig.getAppId, refreshToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
   /**
