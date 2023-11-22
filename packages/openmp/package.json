@@ -1,6 +1,6 @@
 {
   "name": "@tnwx2/openmp",
-  "version": "2.5.5",
+  "version": "1.0.0",
   "description": "TNWX 微信系开发脚手架之缓存",
   "keywords": [
     "tnw",
@@ -29,7 +29,8 @@
     "dist"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
@@ -50,5 +51,5 @@
   "dependencies": {
     "@tnwx2/commons": "^2.5.5"
   },
-  "gitHead": "0f631ba19491b13de9828ab1ba5f98eca08d550b"
+  "gitHead": "6c0c3f8b8524794b09f8dcc36d903d7ffd5658d1"
 }
