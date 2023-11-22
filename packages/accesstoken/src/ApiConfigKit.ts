@@ -1,5 +1,5 @@
 import { ApiConfig } from './ApiConfig'
-import { ICache, DefaultCache } from '@tnwx/cache'
+import { ICache, DefaultCache } from '@tnwx2/cache'
 
 export class ApiConfigKit {
   static CFG_MAP: Map<String, ApiConfig> = new Map<String, ApiConfig>()

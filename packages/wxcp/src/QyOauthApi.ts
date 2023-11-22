@@ -1,7 +1,7 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
-import { HttpKit } from '@tnwx/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
+import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com

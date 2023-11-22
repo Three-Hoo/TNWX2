@@ -1,6 +1,6 @@
 import * as util from 'util'
-import { ICache } from '@tnwx/cache'
-import { HttpKit } from '@tnwx/kits'
+import { ICache } from '@tnwx2/cache'
+import { HttpKit } from '@tnwx2/kits'
 import { AccessToken, AccessTokenType } from '../AccessToken'
 import { QyApiConfigKit } from '../wxcp/QyApiConfigKit'
 import { OpenCpAccessTokenApi } from './OpenCpAccessTokenApi'

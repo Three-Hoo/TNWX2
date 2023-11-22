@@ -1,11 +1,11 @@
-# @tnwx/kits
+# @tnwx2/kits
 
 TNWX 微信系开发脚手架之工具集合
 
 <p align="center">
- <a href="https://www.npmjs.com/package/@tnwx/kits" target="_blank"><img src="https://img.shields.io/npm/l/@tnwx/kits.svg?style=flat-square" alt="Package License" /></a>
-<a href="https://www.npmjs.com/package/@tnwx/kits" target="_blank"><img src="https://img.shields.io/npm/v/@tnwx/kits.svg?style=flat-square" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/package/@tnwx/kits" target="_blank"><img src="https://img.shields.io/npm/dt/@tnwx/kits.svg?style=flat-square" alt="NPM Downloads" /></a>
+ <a href="https://www.npmjs.com/package/@tnwx2/kits" target="_blank"><img src="https://img.shields.io/npm/l/@tnwx2/kits.svg?style=flat-square" alt="Package License" /></a>
+<a href="https://www.npmjs.com/package/@tnwx2/kits" target="_blank"><img src="https://img.shields.io/npm/v/@tnwx2/kits.svg?style=flat-square" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/package/@tnwx2/kits" target="_blank"><img src="https://img.shields.io/npm/dt/@tnwx2/kits.svg?style=flat-square" alt="NPM Downloads" /></a>
 <a href="https://github.com/Javen205/donate" target="_blank"><img src="https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg?style=flat-square" alt="Donate"/></a>
 </p>
 

@@ -1,7 +1,7 @@
-import { AccessTokenApi, AccessToken } from '@tnwx/accesstoken'
+import { AccessTokenApi, AccessToken } from '@tnwx2/accesstoken'
 import * as util from 'util'
-import { HttpKit } from '@tnwx/kits'
-import { ComSubscribeMsgApi } from '@tnwx/commons'
+import { HttpKit } from '@tnwx2/kits'
+import { ComSubscribeMsgApi } from '@tnwx2/commons'
 
 /**
  * @author Javen
@@ -9,7 +9,6 @@ import { ComSubscribeMsgApi } from '@tnwx/commons'
  * @description 小程序订阅消息相关 API
  */
 export class MiniSubscribeMsgApi {
-
   /**
    * 组合模板并添加至帐号下的个人模板库
    * @param tid 模板标题 id

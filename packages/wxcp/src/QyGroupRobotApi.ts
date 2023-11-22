@@ -1,4 +1,4 @@
-import { HttpKit } from '@tnwx/kits'
+import { HttpKit } from '@tnwx2/kits'
 import { QyTextMsg } from './entity/QyTextMsg'
 import { QyMarkDownMsg } from './entity/QyMarkDownMsg'
 import { QyImageMsg } from './entity/QyImageMsg'

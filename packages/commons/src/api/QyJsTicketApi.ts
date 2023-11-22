@@ -5,9 +5,9 @@
  */
 
 import * as util from 'util'
-import { QyApiConfigKit, AccessToken, QyAccessTokenApi } from '@tnwx/accesstoken'
-import { ICache } from '@tnwx/cache'
-import { HttpKit } from '@tnwx/kits'
+import { QyApiConfigKit, AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
+import { ICache } from '@tnwx2/cache'
+import { HttpKit } from '@tnwx2/kits'
 import { JsTicket } from '../entity/JsTicket'
 import { QyJsApiType } from '../Enums'
 

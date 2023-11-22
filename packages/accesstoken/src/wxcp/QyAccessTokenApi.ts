@@ -1,9 +1,9 @@
 import * as util from 'util'
 import { AccessToken } from '../AccessToken'
 import { ApiConfig } from '../ApiConfig'
-import { ICache } from '@tnwx/cache'
+import { ICache } from '@tnwx2/cache'
 import { QyApiConfigKit } from './QyApiConfigKit'
-import { HttpKit } from '@tnwx/kits'
+import { HttpKit } from '@tnwx2/kits'
 
 /**
  * @author Javen

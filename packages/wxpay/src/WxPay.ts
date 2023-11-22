@@ -1,4 +1,4 @@
-import { HttpKit, Kits, SIGN_TYPE } from '@tnwx/kits'
+import { HttpKit, Kits, SIGN_TYPE } from '@tnwx2/kits'
 import { PayKit } from './PayKit'
 import { WX_API_TYPE } from './WxApiType'
 import { WX_DOMAIN } from './WxDomain'
@@ -16,7 +16,7 @@ export class WxPay {
    * @param signType 签名类型 默认为 MD5 加密
    */
   public static getSignKey(mchId: string, key: string, signType = SIGN_TYPE.SIGN_TYPE_MD5): Promise<any> {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
       let reqObj: any = {
         mch_id: mchId,
         nonce_str: Kits.generateStr() //生成随机字符串
@@ -130,6 +130,6 @@ export class WxPay {
    * @returns {string}  签名字符串
    */
   public static createSign(unSignArray: Array<string>, key: Buffer): string {
-    return PayKit.createSign(unSignArray, key);
+    return PayKit.createSign(unSignArray, key)
   }
 }

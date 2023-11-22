@@ -1,6 +1,6 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx/accesstoken'
-import { HttpKit } from '@tnwx/kits'
+import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
 import { DeviceIdentifier } from './ShakeAroundDeviceApi'
 
 /**

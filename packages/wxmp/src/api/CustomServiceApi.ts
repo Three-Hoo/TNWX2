@@ -1,7 +1,7 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi, ApiConfigKit } from '@tnwx/accesstoken'
-import { HttpKit } from '@tnwx/kits'
-import { Article, MenuMsg } from '@tnwx/commons'
+import { AccessToken, AccessTokenApi, ApiConfigKit } from '@tnwx2/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
+import { Article, MenuMsg } from '@tnwx2/commons'
 
 /**
  * @author Javen

@@ -1,6 +1,6 @@
 import * as util from 'util'
-import { HttpKit } from '@tnwx/kits'
-import { AccessToken, QyAccessTokenApi } from '@tnwx/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
+import { AccessToken, QyAccessTokenApi } from '@tnwx2/accesstoken'
 import { QyTextMsg, QyImageMsg, QyVoiceMsg, QyVideoMsg, QyFileMsg, QyTextCardMsg, QyNewsMsg, QyMpNewsMsg, QyMarkDownMsg } from '.'
 /**
  * @author Javen

@@ -1,6 +1,6 @@
 import * as util from 'util'
-import { HttpKit } from '@tnwx/kits'
-import { AccessToken, OpenCpAccessTokenApi, AccessTokenType, OpenComponentAccessTokenApi } from '@tnwx/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
+import { AccessToken, OpenCpAccessTokenApi, AccessTokenType, OpenComponentAccessTokenApi } from '@tnwx2/accesstoken'
 /**
  * @author Javen
  * @copyright javendev@126.com
@@ -267,7 +267,7 @@ export class OpenMpApi {
    * @param appId 第三方平台 appId
    */
   public static async clearComponentQuota(appId: string) {
-    let accessToken:AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
+    let accessToken: AccessToken = await OpenComponentAccessTokenApi.getAccessToken()
     let url = util.format(this.clearComponentQuotaUrl, accessToken.getAccessToken)
     return HttpKit.getHttpDelegate.httpPost(
       url,
@@ -277,5 +277,3 @@ export class OpenMpApi {
     )
   }
 }
-
-  

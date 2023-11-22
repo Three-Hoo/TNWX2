@@ -1,6 +1,6 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx/accesstoken'
-import { HttpKit } from '@tnwx/kits'
+import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
 
 /**
  * @author Javen
@@ -87,9 +87,12 @@ export class TemplateApi {
       accessToken = await AccessTokenApi.getAccessToken()
     }
     let url = util.format(this.delTemplateUrl, accessToken.getAccessToken)
-    return HttpKit.getHttpDelegate.httpPost(url, JSON.stringify({
-      template_id: templateId
-    }))
+    return HttpKit.getHttpDelegate.httpPost(
+      url,
+      JSON.stringify({
+        template_id: templateId
+      })
+    )
   }
 
   /**

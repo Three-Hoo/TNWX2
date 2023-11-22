@@ -1,11 +1,11 @@
-# @tnwx/openmp
+# @tnwx2/openmp
 
 TNWX 微信系开发脚手架之微信开放平台
 
 <p align="center">
- <a href="https://www.npmjs.com/package/@tnwx/open'm'p" target="_blank"><img src="https://img.shields.io/npm/l/@tnwx/openmp.svg?style=flat-square" alt="Package License" /></a>
-<a href="https://www.npmjs.com/package/@tnwx/openmp" target="_blank"><img src="https://img.shields.io/npm/v/@tnwx/openmp.svg?style=flat-square" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/package/@tnwx/openmp" target="_blank"><img src="https://img.shields.io/npm/dt/@tnwx/openmp.svg?style=flat-square" alt="NPM Downloads" /></a>
+ <a href="https://www.npmjs.com/package/@tnwx2/open'm'p" target="_blank"><img src="https://img.shields.io/npm/l/@tnwx2/openmp.svg?style=flat-square" alt="Package License" /></a>
+<a href="https://www.npmjs.com/package/@tnwx2/openmp" target="_blank"><img src="https://img.shields.io/npm/v/@tnwx2/openmp.svg?style=flat-square" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/package/@tnwx2/openmp" target="_blank"><img src="https://img.shields.io/npm/dt/@tnwx2/openmp.svg?style=flat-square" alt="NPM Downloads" /></a>
 <a href="https://github.com/Javen205/donate" target="_blank"><img src="https://img.shields.io/badge/Donate-WeChat-%23ff3f59.svg?style=flat-square" alt="Donate"/></a>
 </p>
 

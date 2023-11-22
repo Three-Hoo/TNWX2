@@ -5,9 +5,9 @@
  */
 
 import * as util from 'util'
-import { AccessToken, AccessTokenApi, ApiConfigKit } from '@tnwx/accesstoken'
-import { ICache } from '@tnwx/cache'
-import { HttpKit } from '@tnwx/kits'
+import { AccessToken, AccessTokenApi, ApiConfigKit } from '@tnwx2/accesstoken'
+import { ICache } from '@tnwx2/cache'
+import { HttpKit } from '@tnwx2/kits'
 import { JsTicket } from '../entity/JsTicket'
 import { JsApiType } from '../Enums'
 

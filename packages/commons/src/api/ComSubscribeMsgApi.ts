@@ -1,6 +1,6 @@
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx/accesstoken'
-import { HttpKit } from '@tnwx/kits'
+import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
 
 /**
  * @author Javen
@@ -59,7 +59,6 @@ export class ComSubscribeMsgApi {
     return HttpKit.getHttpDelegate.httpGet(url)
   }
 
-
   /**
    * 获取模板中的关键词
    * @param tid 模板标题 id
@@ -69,7 +68,6 @@ export class ComSubscribeMsgApi {
     let url = util.format(this.getPubTemplateKeyWordsUrl, (<AccessToken>accessToken).getAccessToken, tid)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
-
 
   /**
    * 获取类目下的公共模板
@@ -83,7 +81,6 @@ export class ComSubscribeMsgApi {
     return HttpKit.getHttpDelegate.httpGet(url)
   }
 
-
   /**
    * 获取私有模板列表
    */
@@ -92,7 +89,6 @@ export class ComSubscribeMsgApi {
     let url = util.format(this.getTemplateUrl, (<AccessToken>accessToken).getAccessToken)
     return HttpKit.getHttpDelegate.httpGet(url)
   }
-
 
   /**
    * 发送订阅通知

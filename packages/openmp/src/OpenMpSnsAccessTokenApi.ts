@@ -1,8 +1,8 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
-import { ApiConfigKit, AccessToken, OpenComponentAccessTokenApi } from '@tnwx/accesstoken'
-import { HttpKit } from '@tnwx/kits'
-import { ScopeEnum, Lang } from '@tnwx/commons'
+import { ApiConfigKit, AccessToken, OpenComponentAccessTokenApi } from '@tnwx2/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
+import { ScopeEnum, Lang } from '@tnwx2/commons'
 /**
  * @author Javen
  * @copyright javendev@126.com

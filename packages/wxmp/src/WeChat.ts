@@ -1,6 +1,6 @@
 import * as crypto from 'crypto'
 import { parseString } from 'xml2js'
-import { ApiConfigKit, AccessToken } from '@tnwx/accesstoken'
+import { ApiConfigKit, AccessToken } from '@tnwx2/accesstoken'
 import {
   CryptoKit,
   MsgAdapter,
@@ -35,8 +35,8 @@ import {
   InAuthMpEvent,
   InMassEvent,
   InWxVerifyDispatchEvent
-} from '@tnwx/commons'
-import { Kits } from '@tnwx/kits'
+} from '@tnwx2/commons'
+import { Kits } from '@tnwx2/kits'
 
 export class WeChat {
   /**
@@ -93,8 +93,8 @@ export class WeChat {
   public static handleMsg(msgAdapter: MsgAdapter, msgXml: string, msgSignature?: string, timestamp?: string, nonce?: string): Promise<string> {
     //实例微信消息加解密
     let cryptoKit: CryptoKit
-    return new Promise(function (resolve, reject) {
-      parseString(msgXml, { explicitArray: false }, async function (err, result) {
+    return new Promise(function(resolve, reject) {
+      parseString(msgXml, { explicitArray: false }, async function(err, result) {
         if (err) {
           reject(`xml 数据解析错误:${err}`)
           console.debug(err)

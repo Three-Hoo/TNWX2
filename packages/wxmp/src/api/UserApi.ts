@@ -4,8 +4,8 @@
  * @description 模板消息
  */
 import * as util from 'util'
-import { AccessToken, AccessTokenApi } from '@tnwx/accesstoken'
-import { HttpKit } from '@tnwx/kits'
+import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
 
 export class UserApi {
   private static updateRemarkUrl: string = 'https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=%s'

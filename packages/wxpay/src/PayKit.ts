@@ -1,5 +1,5 @@
 import { RequestMethod } from './RequestMethod'
-import { Kits, HttpKit } from '@tnwx/kits'
+import { Kits, HttpKit } from '@tnwx2/kits'
 import * as urlencode from 'urlencode'
 import * as os from 'os'
 import * as util from 'util'
@@ -401,7 +401,7 @@ export class PayKit {
 
   /**
    * 微信支付 Api-v3
-   * 
+   *
    * @param {RequestMethod} requestMethod 请求方式
    * @param {string} urlPrefix 请求接口前缀，可通过 WxDmainType 来获取
    * @param {string} urlSuffix 请求接口后缀，可通过 WxApiType 来获取
@@ -423,8 +423,8 @@ export class PayKit {
     data?: string,
     params?: Map<string, string>,
     platSerialNo?: string,
-    filePath?: string) {
-
+    filePath?: string
+  ) {
     switch (requestMethod) {
       case RequestMethod.GET:
         return this.exeGet(urlPrefix, urlSuffix, mchId, serialNo, key, params, platSerialNo)
@@ -437,7 +437,7 @@ export class PayKit {
       case RequestMethod.PUT:
         return this.exePut(urlPrefix, urlSuffix, mchId, serialNo, key, data, platSerialNo)
       default:
-        break;
+        break
     }
   }
 }

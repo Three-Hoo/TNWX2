@@ -1,8 +1,8 @@
 import * as util from 'util'
 import * as urlencode from 'urlencode'
-import { ApiConfigKit } from '@tnwx/accesstoken'
-import { HttpKit } from '@tnwx/kits'
-import { ScopeEnum, Lang } from '@tnwx/commons'
+import { ApiConfigKit } from '@tnwx2/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
+import { ScopeEnum, Lang } from '@tnwx2/commons'
 
 export class SnsAccessTokenApi {
   private static authorizeUrl: string = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s'

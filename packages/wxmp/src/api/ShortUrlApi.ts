@@ -1,6 +1,6 @@
 import * as util from 'util'
-import { HttpKit } from '@tnwx/kits'
-import { AccessToken, AccessTokenApi } from '@tnwx/accesstoken'
+import { HttpKit } from '@tnwx2/kits'
+import { AccessToken, AccessTokenApi } from '@tnwx2/accesstoken'
 
 /**
  * @author Javen

@@ -1,5 +1,5 @@
 import { WxPayApiConfig } from './WxPayApiConfig'
-import { ICache, DefaultCache } from '@tnwx/cache'
+import { ICache, DefaultCache } from '@tnwx2/cache'
 /**
  * @author Javen
  * @copyright javendev@126.com

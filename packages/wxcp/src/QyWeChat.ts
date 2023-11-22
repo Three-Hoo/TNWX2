@@ -1,4 +1,4 @@
-import { QyApiConfigKit } from '@tnwx/accesstoken'
+import { QyApiConfigKit } from '@tnwx2/accesstoken'
 import { parseString } from 'xml2js'
 import {
   CryptoKit,
@@ -42,9 +42,9 @@ import {
   InExternalContact,
   InExternalContactEvent,
   InRegisterCorp
-} from '@tnwx/commons'
+} from '@tnwx2/commons'
 
-import { Kits } from '@tnwx/kits'
+import { Kits } from '@tnwx2/kits'
 
 /**
  * @author Javen
