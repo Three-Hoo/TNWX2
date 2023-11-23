@@ -1404,32 +1404,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tnwx2/accesstoken@npm:^2.5.5, @tnwx2/accesstoken@workspace:packages/accesstoken":
+"@tnwx2/accesstoken@npm:^1.0.4, @tnwx2/accesstoken@workspace:packages/accesstoken":
   version: 0.0.0-use.local
   resolution: "@tnwx2/accesstoken@workspace:packages/accesstoken"
   dependencies:
-    "@tnwx2/cache": "npm:^2.5.5"
-    "@tnwx2/kits": "npm:^2.5.5"
+    "@tnwx2/cache": "npm:^1.0.4"
+    "@tnwx2/kits": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/cache@npm:^2.5.5, @tnwx2/cache@workspace:packages/cache":
+"@tnwx2/cache@npm:^1.0.4, @tnwx2/cache@workspace:packages/cache":
   version: 0.0.0-use.local
   resolution: "@tnwx2/cache@workspace:packages/cache"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/commons@npm:^2.5.5, @tnwx2/commons@workspace:packages/commons":
+"@tnwx2/commons@npm:^1.0.4, @tnwx2/commons@workspace:packages/commons":
   version: 0.0.0-use.local
   resolution: "@tnwx2/commons@workspace:packages/commons"
   dependencies:
-    "@tnwx2/accesstoken": "npm:^2.5.5"
-    "@tnwx2/cache": "npm:^2.5.5"
-    "@tnwx2/kits": "npm:^2.5.5"
+    "@tnwx2/accesstoken": "npm:^1.0.4"
+    "@tnwx2/cache": "npm:^1.0.4"
+    "@tnwx2/kits": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/kits@npm:^2.5.5, @tnwx2/kits@workspace:packages/kits":
+"@tnwx2/kits@npm:^1.0.4, @tnwx2/kits@workspace:packages/kits":
   version: 0.0.0-use.local
   resolution: "@tnwx2/kits@workspace:packages/kits"
   dependencies:
@@ -1447,53 +1447,53 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@tnwx2/miniprogram@npm:^2.5.5, @tnwx2/miniprogram@workspace:packages/miniprogram":
+"@tnwx2/miniprogram@npm:^1.0.4, @tnwx2/miniprogram@workspace:packages/miniprogram":
   version: 0.0.0-use.local
   resolution: "@tnwx2/miniprogram@workspace:packages/miniprogram"
   dependencies:
-    "@tnwx2/accesstoken": "npm:^2.5.5"
-    "@tnwx2/commons": "npm:^2.5.5"
+    "@tnwx2/accesstoken": "npm:^1.0.4"
+    "@tnwx2/commons": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/opencp@npm:^2.5.5, @tnwx2/opencp@workspace:packages/opencp":
+"@tnwx2/opencp@npm:^1.0.4, @tnwx2/opencp@workspace:packages/opencp":
   version: 0.0.0-use.local
   resolution: "@tnwx2/opencp@workspace:packages/opencp"
   dependencies:
-    "@tnwx2/accesstoken": "npm:^2.5.5"
+    "@tnwx2/accesstoken": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/openmp@npm:^2.5.5, @tnwx2/openmp@workspace:packages/openmp":
+"@tnwx2/openmp@npm:^1.0.4, @tnwx2/openmp@workspace:packages/openmp":
   version: 0.0.0-use.local
   resolution: "@tnwx2/openmp@workspace:packages/openmp"
   dependencies:
-    "@tnwx2/commons": "npm:^2.5.5"
+    "@tnwx2/commons": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/wxcp@npm:^2.5.5, @tnwx2/wxcp@workspace:packages/wxcp":
+"@tnwx2/wxcp@npm:^1.0.4, @tnwx2/wxcp@workspace:packages/wxcp":
   version: 0.0.0-use.local
   resolution: "@tnwx2/wxcp@workspace:packages/wxcp"
   dependencies:
-    "@tnwx2/commons": "npm:^2.5.5"
+    "@tnwx2/commons": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/wxmp@npm:^2.5.5, @tnwx2/wxmp@workspace:packages/wxmp":
+"@tnwx2/wxmp@npm:^1.0.4, @tnwx2/wxmp@workspace:packages/wxmp":
   version: 0.0.0-use.local
   resolution: "@tnwx2/wxmp@workspace:packages/wxmp"
   dependencies:
-    "@tnwx2/commons": "npm:^2.5.5"
+    "@tnwx2/commons": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
-"@tnwx2/wxpay@npm:^2.5.5, @tnwx2/wxpay@workspace:packages/wxpay":
+"@tnwx2/wxpay@npm:^1.0.4, @tnwx2/wxpay@workspace:packages/wxpay":
   version: 0.0.0-use.local
   resolution: "@tnwx2/wxpay@workspace:packages/wxpay"
   dependencies:
-    "@tnwx2/cache": "npm:^2.5.5"
-    "@tnwx2/kits": "npm:^2.5.5"
+    "@tnwx2/cache": "npm:^1.0.4"
+    "@tnwx2/kits": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 
@@ -8647,16 +8647,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tnwx2@workspace:packages/tnwx"
   dependencies:
-    "@tnwx2/accesstoken": "npm:^2.5.5"
-    "@tnwx2/cache": "npm:^2.5.5"
-    "@tnwx2/commons": "npm:^2.5.5"
-    "@tnwx2/kits": "npm:^2.5.5"
-    "@tnwx2/miniprogram": "npm:^2.5.5"
-    "@tnwx2/opencp": "npm:^2.5.5"
-    "@tnwx2/openmp": "npm:^2.5.5"
-    "@tnwx2/wxcp": "npm:^2.5.5"
-    "@tnwx2/wxmp": "npm:^2.5.5"
-    "@tnwx2/wxpay": "npm:^2.5.5"
+    "@tnwx2/accesstoken": "npm:^1.0.4"
+    "@tnwx2/cache": "npm:^1.0.4"
+    "@tnwx2/commons": "npm:^1.0.4"
+    "@tnwx2/kits": "npm:^1.0.4"
+    "@tnwx2/miniprogram": "npm:^1.0.4"
+    "@tnwx2/opencp": "npm:^1.0.4"
+    "@tnwx2/openmp": "npm:^1.0.4"
+    "@tnwx2/wxcp": "npm:^1.0.4"
+    "@tnwx2/wxmp": "npm:^1.0.4"
+    "@tnwx2/wxpay": "npm:^1.0.4"
   languageName: unknown
   linkType: soft
 

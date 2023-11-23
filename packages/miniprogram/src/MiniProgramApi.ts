@@ -391,6 +391,18 @@ export class MiniProgramApi {
     )
   }
 
+  private static getPhoneNumberUrl: string = 'https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=%s'
+  public static async getPhoneNumber(apiConfig: ApiConfig, code: string) {
+    let accessToken = await AccessTokenApi.getAccessToken(apiConfig)
+    let url = util.format(this.getPhoneNumberUrl, (<AccessToken>accessToken).getAccessToken)
+    return HttpKit.getHttpDelegate.httpPost(
+      url,
+      JSON.stringify({
+        code: code
+      })
+    )
+  }
+
   private static userLogSearchUrl: string = 'https://api.weixin.qq.com/wxaapi/userlog/userlog_search?access_token=%s&date=%s&begintime=%s&endtime=%s&start=%s&limit=%s'
 
   /**
